@@ -12,8 +12,15 @@ public class DealershipDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.UseSerialColumns();
+        modelBuilder.Entity<OrderDetails>()
+            .HasMany<Product>(s => s.Products)
+            .WithMany(c => c.Orders);
+        
     }
     
-    public DbSet<Product> Products { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Product> Products { get; set; }                                                            
+    public DbSet<OrderDetails> OrderDetails { get; set; }
+    // public DbSet<OrderItems> OrderItems { get; set; }
+
 }
