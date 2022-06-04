@@ -15,7 +15,7 @@ public class User
     
     public string? Address { get; set; }
     
-    [MaxLength(9)]
+    [MaxLength(9)]  
     public string? Telephone { get; set; }
     
     public DateTime CreatedAt {get; set; }
