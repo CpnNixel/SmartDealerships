@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartDealerships.DataAccess.PSQL;
@@ -11,9 +12,10 @@ using SmartDealerships.DataAccess.PSQL;
 namespace SmartDealerships.DataAccess.Migrations
 {
     [DbContext(typeof(DealershipDbContext))]
-    partial class DealershipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220605193257_ChangedUserPhoneLimit")]
+    partial class ChangedUserPhoneLimit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,30 +235,6 @@ namespace SmartDealerships.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "Kharkiv city, Buchmy 50",
-                            CreatedAt = new DateTime(2022, 6, 5, 23, 5, 45, 619, DateTimeKind.Utc).AddTicks(4452),
-                            FirstName = "John",
-                            LastName = "Doe",
-                            ModifiedAt = new DateTime(2022, 6, 5, 23, 5, 45, 619, DateTimeKind.Utc).AddTicks(4499),
-                            PasswordHash = "am9obmRvZTI0MTAK",
-                            Telephone = "380662016"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "Pervomaiskiy",
-                            CreatedAt = new DateTime(2022, 6, 5, 23, 5, 45, 619, DateTimeKind.Utc).AddTicks(4506),
-                            FirstName = "Mykyta",
-                            LastName = "Kysil",
-                            ModifiedAt = new DateTime(2022, 6, 5, 23, 5, 45, 619, DateTimeKind.Utc).AddTicks(4509),
-                            PasswordHash = "MTIwOTE5OTMK",
-                            Telephone = "0662016521"
-                        });
                 });
 
             modelBuilder.Entity("CompanyUser", b =>

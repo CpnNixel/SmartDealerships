@@ -1,30 +1,51 @@
 using Microsoft.EntityFrameworkCore;
+using SmartDealerships.DataAccess.Interfaces;
+using SmartDealerships.Infrastructure.Extensions;
 using SmartDealerships.Infrastructure.Models;
 
 namespace SmartDealerships.DataAccess.PSQL;
 
-public class DealershipDbContext : DbContext
+public sealed class DealershipDbContext : DbContext, IDealershipDbContext
 {
     public DealershipDbContext(DbContextOptions<DealershipDbContext> options): base(options)
     {
+        Database.EnsureCreated();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.UseSerialColumns();
+        base.OnModelCreating(modelBuilder);
+        // modelBuilder.UseSerialColumns();
+        modelBuilder.UseIdentityByDefaultColumns();
         modelBuilder.Entity<OrderDetails>()
             .HasMany<Product>(s => s.Products)
             .WithMany(c => c.Orders);
 
-        // // modelBuilder
-        // //     .Entity<Company>()
-        // //     .HasMany<Product>(p => p.Products)
-        // //     .WithMany(p => p.Companies);
-        // //
-        // modelBuilder.Entity<Product>()
-        //     .HasMany<Company>(x => x.Companies)
-        //     .WithMany(x => x.Products);
-
+        modelBuilder.Entity<User>()
+            .HasData(
+                new User
+                {
+                    Id = 1,
+                    FirstName = "John",
+                    LastName = "Doe",
+                    PasswordHash = "am9obmRvZTI0MTAK",
+                    Address = "Kharkiv city, Buchmy 50",
+                    Telephone = "380662016",
+                    CreatedAt = DateTime.Now.SetKindUtc(),
+                    ModifiedAt = DateTime.Now.SetKindUtc()
+                },
+                
+                new User
+                {
+                    Id = 2,
+                    FirstName = "Mykyta",
+                    LastName = "Kysil",
+                    PasswordHash = "MTIwOTE5OTMK",
+                    Address = "Pervomaiskiy",
+                    Telephone = "0662016521",
+                    CreatedAt = DateTime.Now.SetKindUtc(),
+                    ModifiedAt = DateTime.Now.SetKindUtc()
+                });
     }
     
     public DbSet<User> Users { get; set; }

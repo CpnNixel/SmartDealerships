@@ -18,8 +18,4 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SmartDealerships.Infrastructure\SmartDealerships.Infrastructure.csproj" />
-  </ItemGroup>
-
 </Project>
