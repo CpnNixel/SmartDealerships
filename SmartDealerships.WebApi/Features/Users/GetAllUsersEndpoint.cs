@@ -1,14 +1,8 @@
 using FastEndpoints;
 using MediatR;
-using SmartDealerships.Infrastructure.DTO;
 using SmartDealerships.Infrastructure.Queries;
 
 namespace SmartDealerships.WebApi.Features.Users;
-
-public class UsersResponse
-{
-    public List<UserDTO> Users { get; set; }
-}
 
 public class GetAllUsersEndpoint : EndpointWithoutRequest<UsersResponse>
 {
