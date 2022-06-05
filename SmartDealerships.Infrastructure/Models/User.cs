@@ -11,7 +11,7 @@ public class User
     
     public string? LastName { get; set; }
 
-    public string? Password { get; set; }
+    public string? PasswordHash { get; set; }
     
     public string? Address { get; set; }
     
@@ -21,4 +21,6 @@ public class User
     public DateTime CreatedAt {get; set; }
     
     public DateTime ModifiedAt {get; set; }
+    
+    public virtual ICollection<Company> Companies { get; set; }
 }

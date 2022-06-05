@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartDealerships.DataAccess.PSQL;
@@ -11,9 +12,10 @@ using SmartDealerships.DataAccess.PSQL;
 namespace SmartDealerships.DataAccess.Migrations
 {
     [DbContext(typeof(DealershipDbContext))]
-    partial class DealershipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220605165958_AddedCompany")]
+    partial class AddedCompany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,7 +225,7 @@ namespace SmartDealerships.DataAccess.Migrations
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("Password")
                         .HasColumnType("text");
 
                     b.Property<string>("Telephone")

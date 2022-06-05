@@ -15,4 +15,8 @@ public class Product
     public decimal Price { get; set; }
     
     public virtual ICollection<OrderDetails> Orders { get; set; }
+    
+    public int CompanyId { get; set; }
+    
+    public Company SellingCompany { get; set; }
 }
