@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartDealerships.DataAccess.PSQL;
@@ -11,9 +12,10 @@ using SmartDealerships.DataAccess.PSQL;
 namespace SmartDealerships.DataAccess.Migrations
 {
     [DbContext(typeof(DealershipDbContext))]
-    partial class DealershipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220607160235_AddedUserEmail")]
+    partial class AddedUserEmail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,7 +216,6 @@ namespace SmartDealerships.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
@@ -243,11 +244,10 @@ namespace SmartDealerships.DataAccess.Migrations
                         {
                             Id = 1,
                             Address = "Kharkiv city, Buchmy 50",
-                            CreatedAt = new DateTime(2022, 6, 7, 19, 36, 14, 474, DateTimeKind.Utc).AddTicks(6110),
-                            Email = "john.doe@gmail.com",
+                            CreatedAt = new DateTime(2022, 6, 7, 19, 2, 35, 272, DateTimeKind.Utc).AddTicks(932),
                             FirstName = "John",
                             LastName = "Doe",
-                            ModifiedAt = new DateTime(2022, 6, 7, 19, 36, 14, 474, DateTimeKind.Utc).AddTicks(6150),
+                            ModifiedAt = new DateTime(2022, 6, 7, 19, 2, 35, 272, DateTimeKind.Utc).AddTicks(974),
                             PasswordHash = "am9obmRvZTI0MTAK",
                             Telephone = "380662016"
                         },
@@ -255,11 +255,10 @@ namespace SmartDealerships.DataAccess.Migrations
                         {
                             Id = 2,
                             Address = "Pervomaiskiy",
-                            CreatedAt = new DateTime(2022, 6, 7, 19, 36, 14, 474, DateTimeKind.Utc).AddTicks(6157),
-                            Email = "mykyta.kysil@nure.ua",
+                            CreatedAt = new DateTime(2022, 6, 7, 19, 2, 35, 272, DateTimeKind.Utc).AddTicks(981),
                             FirstName = "Mykyta",
                             LastName = "Kysil",
-                            ModifiedAt = new DateTime(2022, 6, 7, 19, 36, 14, 474, DateTimeKind.Utc).AddTicks(6161),
+                            ModifiedAt = new DateTime(2022, 6, 7, 19, 2, 35, 272, DateTimeKind.Utc).AddTicks(984),
                             PasswordHash = "MTIwOTE5OTMK",
                             Telephone = "0662016521"
                         });

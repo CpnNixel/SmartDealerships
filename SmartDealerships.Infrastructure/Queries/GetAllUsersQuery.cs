@@ -3,7 +3,7 @@ using SmartDealerships.Infrastructure.DTO;
 
 namespace SmartDealerships.Infrastructure.Queries;
 
-public class GetUsersByNothing : IRequest<List<UserDTO>>
+public class GetAllUsersQuery : IRequest<List<UserDTO>>
 {
     
 }

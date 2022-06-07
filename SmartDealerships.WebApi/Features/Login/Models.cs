@@ -12,8 +12,7 @@ public class LoginRequest
 
 public class LoginResponse
 {
-    public string Message => "Author created!";
-    public long AuthorId { get; set; }
+    public string? Token { get; set; }
 }
 
 public class Validator : Validator<LoginRequest>

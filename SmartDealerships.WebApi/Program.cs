@@ -81,9 +81,6 @@ app.UseFastEndpoints();
 app.UseOpenApi();
 app.UseSwaggerUi3(c => c.ConfigureDefaults());
 
-app.MapGet("/hello", () =>
-{
-    return Results.Ok("Hello world");
-});
+app.MapGet("/hello", () => Results.Ok("Hello world"));
 
 app.Run();

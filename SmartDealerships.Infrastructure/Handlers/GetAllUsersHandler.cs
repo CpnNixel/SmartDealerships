@@ -5,7 +5,7 @@ using SmartDealerships.Infrastructure.Queries;
 
 namespace SmartDealerships.Infrastructure.Handlers;
 
-public class GetAllUsersHandler : IRequestHandler<GetUsersByNothing, List<UserDTO>>
+public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, List<UserDTO>>
 {
     private readonly IDealershipDbContext _dbContext;
 
@@ -14,7 +14,7 @@ public class GetAllUsersHandler : IRequestHandler<GetUsersByNothing, List<UserDT
         _dbContext = dbContext;
     }
 
-    public Task<List<UserDTO>> Handle(GetUsersByNothing req, CancellationToken ct)
+    public Task<List<UserDTO>> Handle(GetAllUsersQuery req, CancellationToken ct)
     {
         var users = _dbContext.Users.ToList();
         
