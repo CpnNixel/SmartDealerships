@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartDealerships.DataAccess.PSQL;
@@ -11,9 +12,10 @@ using SmartDealerships.DataAccess.PSQL;
 namespace SmartDealerships.DataAccess.Migrations
 {
     [DbContext(typeof(DealershipDbContext))]
-    partial class DealershipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220607204420_SeedFixing")]
+    partial class SeedFixing
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,10 +224,12 @@ namespace SmartDealerships.DataAccess.Migrations
                     b.Property<decimal>("Total")
                         .HasColumnType("numeric");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ShoppingSessions");
                 });
@@ -265,9 +269,6 @@ namespace SmartDealerships.DataAccess.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ShoppingSessionId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Telephone")
                         .HasMaxLength(13)
                         .HasColumnType("character varying(13)");
@@ -276,9 +277,6 @@ namespace SmartDealerships.DataAccess.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("ShoppingSessionId")
-                        .IsUnique();
-
                     b.ToTable("Users");
 
                     b.HasData(
@@ -286,11 +284,11 @@ namespace SmartDealerships.DataAccess.Migrations
                         {
                             Id = 1,
                             Address = "Kharkiv city, Buchmy 50",
-                            CreatedAt = new DateTime(2022, 6, 8, 0, 34, 35, 67, DateTimeKind.Utc).AddTicks(5700),
+                            CreatedAt = new DateTime(2022, 6, 7, 23, 44, 19, 314, DateTimeKind.Utc).AddTicks(3929),
                             Email = "john.doe@gmail.com",
                             FirstName = "John",
                             LastName = "Doe",
-                            ModifiedAt = new DateTime(2022, 6, 8, 0, 34, 35, 67, DateTimeKind.Utc).AddTicks(5768),
+                            ModifiedAt = new DateTime(2022, 6, 7, 23, 44, 19, 314, DateTimeKind.Utc).AddTicks(4005),
                             PasswordHash = "am9obmRvZTI0MTAK",
                             RoleId = 1,
                             Telephone = "380662016"
@@ -299,11 +297,11 @@ namespace SmartDealerships.DataAccess.Migrations
                         {
                             Id = 2,
                             Address = "Pervomaiskiy",
-                            CreatedAt = new DateTime(2022, 6, 8, 0, 34, 35, 67, DateTimeKind.Utc).AddTicks(5778),
+                            CreatedAt = new DateTime(2022, 6, 7, 23, 44, 19, 314, DateTimeKind.Utc).AddTicks(4014),
                             Email = "mykyta.kysil@nure.ua",
                             FirstName = "Mykyta",
                             LastName = "Kysil",
-                            ModifiedAt = new DateTime(2022, 6, 8, 0, 34, 35, 67, DateTimeKind.Utc).AddTicks(5784),
+                            ModifiedAt = new DateTime(2022, 6, 7, 23, 44, 19, 314, DateTimeKind.Utc).AddTicks(4019),
                             PasswordHash = "MTIwOTE5OTM=",
                             RoleId = 2,
                             Telephone = "0662016521"
@@ -375,6 +373,15 @@ namespace SmartDealerships.DataAccess.Migrations
                     b.Navigation("SellingCompany");
                 });
 
+            modelBuilder.Entity("SmartDealerships.DataAccess.Models.ShoppingSession", b =>
+                {
+                    b.HasOne("SmartDealerships.DataAccess.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SmartDealerships.DataAccess.Models.User", b =>
                 {
                     b.HasOne("SmartDealerships.DataAccess.Models.Role", "Role")
@@ -383,13 +390,7 @@ namespace SmartDealerships.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SmartDealerships.DataAccess.Models.ShoppingSession", "ShoppingSession")
-                        .WithOne("User")
-                        .HasForeignKey("SmartDealerships.DataAccess.Models.User", "ShoppingSessionId");
-
                     b.Navigation("Role");
-
-                    b.Navigation("ShoppingSession");
                 });
 
             modelBuilder.Entity("SmartDealerships.DataAccess.Models.Company", b =>
@@ -400,9 +401,6 @@ namespace SmartDealerships.DataAccess.Migrations
             modelBuilder.Entity("SmartDealerships.DataAccess.Models.ShoppingSession", b =>
                 {
                     b.Navigation("CartItems");
-
-                    b.Navigation("User")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

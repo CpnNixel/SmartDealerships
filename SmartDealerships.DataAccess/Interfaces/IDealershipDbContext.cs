@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using SmartDealerships.Infrastructure.Models;
+using SmartDealerships.DataAccess.Models;
 
 namespace SmartDealerships.DataAccess.Interfaces;
 
@@ -11,6 +11,7 @@ public interface IDealershipDbContext
     DbSet<ShoppingSession> ShoppingSessions { get; set; }
     DbSet<CartItem> CartItems { get; set; }
     DbSet<Company> Companies { get; set; }
+    DbSet<Role> Roles { get; set; }
 
     int SaveChanges();
 }

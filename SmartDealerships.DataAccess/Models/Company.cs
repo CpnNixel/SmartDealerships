@@ -1,4 +1,4 @@
-namespace SmartDealerships.Infrastructure.Models;
+namespace SmartDealerships.DataAccess.Models;
 
 public class Company
 {

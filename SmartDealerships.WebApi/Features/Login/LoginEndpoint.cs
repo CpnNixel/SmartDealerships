@@ -25,8 +25,8 @@ public class LoginEndpoint  : Endpoint<LoginRequest, LoginResponse>
 
         var res = mediator.Send(new LoginUserQuery
         {
-            Email = req.Email,
-            Password = req.Password
+            Email = req?.Email,
+            Password = req?.Password
         }, ct).Result;
         
         if (res.IsSuccessful)
@@ -35,7 +35,8 @@ public class LoginEndpoint  : Endpoint<LoginRequest, LoginResponse>
         }
         else
         {
-            await SendUnauthorizedAsync(ct);
+            await SendNotFoundAsync(ct);
         }
+        
     }
 }

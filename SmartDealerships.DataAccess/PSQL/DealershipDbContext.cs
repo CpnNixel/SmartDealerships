@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SmartDealerships.DataAccess.Interfaces;
+using SmartDealerships.DataAccess.Models;
 using SmartDealerships.Infrastructure.Extensions;
-using SmartDealerships.Infrastructure.Models;
 
 namespace SmartDealerships.DataAccess.PSQL;
 
@@ -21,11 +21,25 @@ public sealed class DealershipDbContext : DbContext, IDealershipDbContext
             .HasMany<Product>(s => s.Products)
             .WithMany(c => c.Orders);
 
+        modelBuilder.Entity<Role>()
+            .HasData(
+                new Role
+                {
+                    Id = 1,
+                    RoleName = "User"
+                },
+                new Role
+                {
+                    Id = 2,
+                    RoleName = "Admin"
+                });
+        
         modelBuilder.Entity<User>()
             .HasData(
                 new User
                 {
                     Id = 1,
+                    RoleId = 1,
                     FirstName = "John",
                     LastName = "Doe",
                     Email = "john.doe@gmail.com",
@@ -39,10 +53,11 @@ public sealed class DealershipDbContext : DbContext, IDealershipDbContext
                 new User
                 {
                     Id = 2,
+                    RoleId = 2,
                     FirstName = "Mykyta",
                     LastName = "Kysil",
                     Email = "mykyta.kysil@nure.ua",
-                    PasswordHash = "MTIwOTE5OTMK",
+                    PasswordHash = "MTIwOTE5OTM=",
                     Address = "Pervomaiskiy",
                     Telephone = "0662016521",
                     CreatedAt = DateTime.Now.SetKindUtc(),
@@ -61,5 +76,7 @@ public sealed class DealershipDbContext : DbContext, IDealershipDbContext
     public DbSet<CartItem> CartItems { get; set; }
     
     public DbSet<Company> Companies { get; set; }
+    
+    public DbSet<Role> Roles { get; set; }
 
 }

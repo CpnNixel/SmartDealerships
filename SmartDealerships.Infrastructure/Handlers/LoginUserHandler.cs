@@ -23,12 +23,13 @@ public class LoginUserHandler : IRequestHandler<LoginUserQuery, LoginResponseDTO
     {
         if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
         {
-            throw new Exception("kek");
+            return new LoginResponseDTO();
         }
 
+        var kek = Base64Encode(request.Password);
         var user = await _dbContext.Users.FirstOrDefaultAsync(
             u => u.Email == request.Email 
-                 && u.PasswordHash == Base64Encode(request.Password), ct);
+                 && u.PasswordHash == kek, ct);
 
         return user is null
             ? new LoginResponseDTO()
