@@ -26,10 +26,9 @@ public class LoginUserHandler : IRequestHandler<LoginUserQuery, LoginResponseDTO
             throw new Exception("kek");
         }
 
-        var kek = Base64Encode(request.Password);
         var user = await _dbContext.Users.FirstOrDefaultAsync(
             u => u.Email == request.Email 
-                 && u.PasswordHash == kek, ct);
+                 && u.PasswordHash == Base64Encode(request.Password), ct);
 
         return user is null
             ? new LoginResponseDTO()
