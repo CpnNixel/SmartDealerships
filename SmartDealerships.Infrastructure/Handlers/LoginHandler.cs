@@ -4,17 +4,19 @@ using System.Text;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using SmartDealerships.DataAccess.Extensions;
 using SmartDealerships.DataAccess.Interfaces;
+using SmartDealerships.DataAccess.Models;
 using SmartDealerships.Infrastructure.DTO;
 using SmartDealerships.Infrastructure.Queries;
 
 namespace SmartDealerships.Infrastructure.Handlers;
 
-public class LoginUserHandler : IRequestHandler<LoginUserQuery, LoginResponseDTO>
+public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDTO>
 {
     private readonly IDealershipDbContext _dbContext;
 
-    public LoginUserHandler(IDealershipDbContext dbContext)
+    public LoginHandler(IDealershipDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -31,15 +33,38 @@ public class LoginUserHandler : IRequestHandler<LoginUserQuery, LoginResponseDTO
             u => u.Email == request.Email 
                  && u.PasswordHash == kek, ct);
 
-        return user is null
-            ? new LoginResponseDTO()
-            : new LoginResponseDTO
-            {
-                IsSuccessful = true,
-                Token = GenerateToken()
-            };
+        if (user is null)
+        {
+            return new LoginResponseDTO();
+        }
+
+        var token = GenerateToken();
+
+        await CreateSession(user, token);
+
+        return new LoginResponseDTO {IsSuccessful = true, Token = GenerateToken()};
+        
     }
 
+    private async Task CreateSession(User user, string token)
+    {
+        _dbContext.ShoppingSessions.Add(
+        
+            new ShoppingSession
+            {
+                UserId = user.Id,
+                User = user,
+                Token = token,
+                Total = 0,
+                CreatedAt = DateTime.Now.SetKindUtc(),
+                ModifiedAt = DateTime.Now.SetKindUtc(),
+
+            }
+        );
+
+        await _dbContext.SaveChangesAsync();
+    }
+    
     private static string GenerateToken()
     {
         var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@2410"));
