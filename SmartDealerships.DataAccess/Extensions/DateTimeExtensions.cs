@@ -1,4 +1,4 @@
-namespace SmartDealerships.Infrastructure.Extensions;
+namespace SmartDealerships.DataAccess.Extensions;
 
 public static class DateTimeExtensions
 {

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using SmartDealerships.DataAccess.Extensions;
 using SmartDealerships.DataAccess.Interfaces;
 using SmartDealerships.DataAccess.Models;
-using SmartDealerships.Infrastructure.Extensions;
 
 namespace SmartDealerships.DataAccess.PSQL;
 
@@ -20,7 +20,7 @@ public sealed class DealershipDbContext : DbContext, IDealershipDbContext
         modelBuilder.Entity<OrderDetails>()
             .HasMany<Product>(s => s.Products)
             .WithMany(c => c.Orders);
-
+        
         modelBuilder.Entity<Role>()
             .HasData(
                 new Role
@@ -78,5 +78,7 @@ public sealed class DealershipDbContext : DbContext, IDealershipDbContext
     public DbSet<Company> Companies { get; set; }
     
     public DbSet<Role> Roles { get; set; }
+
+    public override Task<int> SaveChangesAsync(CancellationToken ct = default) => base.SaveChangesAsync(ct);
 
 }

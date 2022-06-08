@@ -13,5 +13,6 @@ public interface IDealershipDbContext
     DbSet<Company> Companies { get; set; }
     DbSet<Role> Roles { get; set; }
 
+    Task<int> SaveChangesAsync(CancellationToken ct = default);
     int SaveChanges();
 }

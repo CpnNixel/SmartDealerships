@@ -28,10 +28,11 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDTO>
             return new LoginResponseDTO();
         }
 
-        var kek = Base64Encode(request.Password);
+        //Logout? =>   mediator.Send(new LogoutCommand(req.UserId), ct);
+
         var user = await _dbContext.Users.FirstOrDefaultAsync(
             u => u.Email == request.Email 
-                 && u.PasswordHash == kek, ct);
+                 && u.PasswordHash == Base64Encode(request.Password), ct);
 
         if (user is null)
         {
@@ -65,7 +66,7 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDTO>
         await _dbContext.SaveChangesAsync();
     }
     
-    private static string GenerateToken()
+    public static string GenerateToken()
     {
         var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@2410"));
         var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
@@ -80,13 +81,13 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDTO>
     
         return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
     }
-    
-    private static string Base64Decode(string base64EncodedData) {
+
+    internal static string Base64Decode(string base64EncodedData) {
         var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
         return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
     }
-    
-    private static string Base64Encode(string plainText) {
+
+    internal static string Base64Encode(string plainText) {
         var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
         return System.Convert.ToBase64String(plainTextBytes);
     }

@@ -6,7 +6,6 @@ namespace SmartDealerships.WebApi.Features.Login;
 
 public class LoginEndpoint  : Endpoint<LoginRequest, LoginResponse>
 {
-    
     public IMediator mediator { get; set; }
     
     public override void Configure()
@@ -23,11 +22,7 @@ public class LoginEndpoint  : Endpoint<LoginRequest, LoginResponse>
             await SendNotFoundAsync(ct);
         }
 
-        var res = mediator.Send(new LoginUserQuery
-        {
-            Email = req?.Email,
-            Password = req?.Password
-        }, ct).Result;
+        var res = mediator.Send(new LoginUserQuery(req.Email, req.Password), ct).Result;
         
         if (res.IsSuccessful)
         {
@@ -37,6 +32,5 @@ public class LoginEndpoint  : Endpoint<LoginRequest, LoginResponse>
         {
             await SendNotFoundAsync(ct);
         }
-        
     }
 }
