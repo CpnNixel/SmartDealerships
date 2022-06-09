@@ -1,6 +1,6 @@
 namespace SmartDealerships.Infrastructure.DTO;
 
-public class LoginResponseDTO
+public class LoginResponseDto
 {
     public bool IsSuccessful { get; set; } = false;
     

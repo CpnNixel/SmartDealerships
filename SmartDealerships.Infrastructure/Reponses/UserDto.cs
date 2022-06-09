@@ -1,6 +1,6 @@
 namespace SmartDealerships.Infrastructure.DTO;
 
-public class UserDTO
+public class UserDto
 {
     public int Id { get; set; }
     
