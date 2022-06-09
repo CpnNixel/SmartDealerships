@@ -10,13 +10,15 @@ public class Product
     
     public string? Sku { get; set; }
     
-    public string? Category { get; set; }
-    
     public decimal Price { get; set; }
+
+    public int? CategoryId { get; set; }
+    
+    public Category? Category { get; set; }
     
     public virtual ICollection<OrderDetails> Orders { get; set; }
     
     public int CompanyId { get; set; }
     
-    public Company SellingCompany { get; set; }
+    public Company Company { get; set; }
 }

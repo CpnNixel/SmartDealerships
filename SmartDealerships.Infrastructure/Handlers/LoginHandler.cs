@@ -7,12 +7,12 @@ using Microsoft.IdentityModel.Tokens;
 using SmartDealerships.DataAccess.Extensions;
 using SmartDealerships.DataAccess.Interfaces;
 using SmartDealerships.DataAccess.Models;
-using SmartDealerships.Infrastructure.DTO;
 using SmartDealerships.Infrastructure.Queries;
+using SmartDealerships.Infrastructure.Reponses;
 
 namespace SmartDealerships.Infrastructure.Handlers;
 
-public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDTO>
+public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDto>
 {
     private readonly IDealershipDbContext _dbContext;
 
@@ -21,11 +21,11 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDTO>
         _dbContext = dbContext;
     }
 
-    public async Task<LoginResponseDTO> Handle(LoginUserQuery request, CancellationToken ct)
+    public async Task<LoginResponseDto> Handle(LoginUserQuery request, CancellationToken ct)
     {
         if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
         {
-            return new LoginResponseDTO();
+            return new LoginResponseDto();
         }
 
         //Logout? =>   mediator.Send(new LogoutCommand(req.UserId), ct);
@@ -36,14 +36,14 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDTO>
 
         if (user is null)
         {
-            return new LoginResponseDTO();
+            return new LoginResponseDto();
         }
 
         var token = GenerateToken();
 
         await CreateSession(user, token);
 
-        return new LoginResponseDTO {IsSuccessful = true, Token = GenerateToken()};
+        return new LoginResponseDto {IsSuccessful = true, Token = GenerateToken()};
         
     }
 

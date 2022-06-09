@@ -3,11 +3,11 @@ using SmartDealerships.DataAccess.Extensions;
 using SmartDealerships.DataAccess.Interfaces;
 using SmartDealerships.DataAccess.Models;
 using SmartDealerships.Infrastructure.Commands;
-using SmartDealerships.Infrastructure.DTO;
+using SmartDealerships.Infrastructure.Reponses;
 
 namespace SmartDealerships.Infrastructure.Handlers;
 
-public class RegisterHandler : IRequestHandler<RegisterCommand, LoginResponseDTO>
+public class RegisterHandler : IRequestHandler<RegisterCommand, LoginResponseDto>
 {
     private readonly IDealershipDbContext _dbContext;
 
@@ -16,7 +16,7 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, LoginResponseDTO
         _dbContext = dbContext;
     }
 
-    public async Task<LoginResponseDTO> Handle(RegisterCommand req, CancellationToken ct)
+    public async Task<LoginResponseDto> Handle(RegisterCommand req, CancellationToken ct)
     {
         var user = new User
         {
@@ -39,7 +39,7 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, LoginResponseDTO
 
         await CreateSession(user, token);
 
-        return new LoginResponseDTO {IsSuccessful = true, Token = LoginHandler.GenerateToken()};
+        return new LoginResponseDto {IsSuccessful = true, Token = LoginHandler.GenerateToken()};
     }
     
     private async Task CreateSession(User user, string token)

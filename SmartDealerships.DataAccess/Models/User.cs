@@ -19,6 +19,10 @@ public class User
 
     public Role? Role { get; set; }
     
+    public int? CompanyId { get; set; }
+    
+    public Company? Company { get; set; }
+    
     public int? ShoppingSessionId { get; set; }
 
     [ForeignKey("ShoppingSessionId")]
@@ -35,6 +39,4 @@ public class User
     public DateTime CreatedAt {get; set; }
     
     public DateTime ModifiedAt {get; set; }
-    
-    public virtual ICollection<Company> Companies { get; set; }
 }

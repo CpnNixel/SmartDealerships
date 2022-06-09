@@ -1,12 +1,12 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SmartDealerships.DataAccess.Interfaces;
-using SmartDealerships.Infrastructure.DTO;
 using SmartDealerships.Infrastructure.Queries;
+using SmartDealerships.Infrastructure.Reponses;
 
 namespace SmartDealerships.Infrastructure.Handlers;
 
-public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, List<UserDTO>>
+public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, List<UserDto>>
 {
     private readonly IDealershipDbContext _dbContext;
 
@@ -15,7 +15,7 @@ public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, List<UserDTO
         _dbContext = dbContext;
     }
 
-    public Task<List<UserDTO>> Handle(GetAllUsersQuery req, CancellationToken ct)
+    public Task<List<UserDto>> Handle(GetAllUsersQuery req, CancellationToken ct)
     {
         var users = _dbContext.Users.Include(x => x.Role);
         if (!users.Any())
@@ -23,7 +23,7 @@ public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, List<UserDTO
             throw new Exception("no users were found");
         }
         
-        return Task.FromResult(users.Select(u => new UserDTO
+        return Task.FromResult(users.Select(u => new UserDto
         {
             Id = u.Id,
             FirstName = u.FirstName,

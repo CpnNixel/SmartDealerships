@@ -1,8 +1,8 @@
-using SmartDealerships.Infrastructure.DTO;
+using SmartDealerships.Infrastructure.Reponses;
 
 namespace SmartDealerships.WebApi.Features.Users;
 
 public class UsersResponse
 {
-    public List<UserDTO> Users { get; set; }
+    public List<UserDto> Users { get; set; }
 }

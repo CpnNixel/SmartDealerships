@@ -1,9 +1,9 @@
 using MediatR;
-using SmartDealerships.Infrastructure.DTO;
+using SmartDealerships.Infrastructure.Reponses;
 
 namespace SmartDealerships.Infrastructure.Queries;
 
-public class LoginUserQuery : IRequest<LoginResponseDTO>
+public class LoginUserQuery : IRequest<LoginResponseDto>
 {
     public LoginUserQuery(string email, string password)
     {

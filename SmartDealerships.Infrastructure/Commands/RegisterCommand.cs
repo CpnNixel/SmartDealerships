@@ -1,9 +1,9 @@
 using MediatR;
-using SmartDealerships.Infrastructure.DTO;
+using SmartDealerships.Infrastructure.Reponses;
 
 namespace SmartDealerships.Infrastructure.Commands;
 
-public class RegisterCommand : IRequest<LoginResponseDTO>
+public class RegisterCommand : IRequest<LoginResponseDto>
 {
     public RegisterCommand(string? email, string? firstName, string? lastName, string? password, string? address, string? telephone)
     {

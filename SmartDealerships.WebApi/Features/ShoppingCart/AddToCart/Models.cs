@@ -1,4 +1,4 @@
-namespace SmartDealerships.WebApi.Features.ShoppingCart.AddToCartEndpoint;
+namespace SmartDealerships.WebApi.Features.ShoppingCart.AddToCart;
 
 public class AddToCartRequest
 {
