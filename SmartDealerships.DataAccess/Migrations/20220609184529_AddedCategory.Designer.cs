@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartDealerships.DataAccess.PSQL;
@@ -11,9 +12,10 @@ using SmartDealerships.DataAccess.PSQL;
 namespace SmartDealerships.DataAccess.Migrations
 {
     [DbContext(typeof(DealershipDbContext))]
-    partial class DealershipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220609184529_AddedCategory")]
+    partial class AddedCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,21 @@ namespace SmartDealerships.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("CompanyUser", b =>
+                {
+                    b.Property<int>("CompaniesId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("CompaniesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("CompanyUser");
+                });
 
             modelBuilder.Entity("OrderDetailsProduct", b =>
                 {
@@ -351,9 +368,6 @@ namespace SmartDealerships.DataAccess.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("text");
 
-                    b.Property<int?>("CompanyId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -387,8 +401,6 @@ namespace SmartDealerships.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
-
                     b.HasIndex("RoleId");
 
                     b.HasIndex("ShoppingSessionId")
@@ -401,12 +413,11 @@ namespace SmartDealerships.DataAccess.Migrations
                         {
                             Id = 1,
                             Address = "Kharkiv city, Buchmy 50",
-                            CompanyId = 1,
-                            CreatedAt = new DateTime(2022, 6, 9, 21, 53, 58, 653, DateTimeKind.Utc).AddTicks(9211),
+                            CreatedAt = new DateTime(2022, 6, 9, 21, 45, 29, 151, DateTimeKind.Utc).AddTicks(4411),
                             Email = "john.doe@gmail.com",
                             FirstName = "John",
                             LastName = "Doe",
-                            ModifiedAt = new DateTime(2022, 6, 9, 21, 53, 58, 653, DateTimeKind.Utc).AddTicks(9255),
+                            ModifiedAt = new DateTime(2022, 6, 9, 21, 45, 29, 151, DateTimeKind.Utc).AddTicks(4455),
                             PasswordHash = "am9obmRvZTI0MTAK",
                             RoleId = 1,
                             Telephone = "380662016"
@@ -415,16 +426,30 @@ namespace SmartDealerships.DataAccess.Migrations
                         {
                             Id = 2,
                             Address = "Pervomaiskiy",
-                            CompanyId = 1,
-                            CreatedAt = new DateTime(2022, 6, 9, 21, 53, 58, 653, DateTimeKind.Utc).AddTicks(9262),
+                            CreatedAt = new DateTime(2022, 6, 9, 21, 45, 29, 151, DateTimeKind.Utc).AddTicks(4461),
                             Email = "mykyta.kysil@nure.ua",
                             FirstName = "Mykyta",
                             LastName = "Kysil",
-                            ModifiedAt = new DateTime(2022, 6, 9, 21, 53, 58, 653, DateTimeKind.Utc).AddTicks(9265),
+                            ModifiedAt = new DateTime(2022, 6, 9, 21, 45, 29, 151, DateTimeKind.Utc).AddTicks(4464),
                             PasswordHash = "MTIwOTE5OTM=",
                             RoleId = 2,
                             Telephone = "0662016521"
                         });
+                });
+
+            modelBuilder.Entity("CompanyUser", b =>
+                {
+                    b.HasOne("SmartDealerships.DataAccess.Models.Company", null)
+                        .WithMany()
+                        .HasForeignKey("CompaniesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SmartDealerships.DataAccess.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("OrderDetailsProduct", b =>
@@ -485,10 +510,6 @@ namespace SmartDealerships.DataAccess.Migrations
 
             modelBuilder.Entity("SmartDealerships.DataAccess.Models.User", b =>
                 {
-                    b.HasOne("SmartDealerships.DataAccess.Models.Company", "Company")
-                        .WithMany("Owners")
-                        .HasForeignKey("CompanyId");
-
                     b.HasOne("SmartDealerships.DataAccess.Models.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
@@ -498,8 +519,6 @@ namespace SmartDealerships.DataAccess.Migrations
                     b.HasOne("SmartDealerships.DataAccess.Models.ShoppingSession", "ShoppingSession")
                         .WithOne("User")
                         .HasForeignKey("SmartDealerships.DataAccess.Models.User", "ShoppingSessionId");
-
-                    b.Navigation("Company");
 
                     b.Navigation("Role");
 
@@ -513,8 +532,6 @@ namespace SmartDealerships.DataAccess.Migrations
 
             modelBuilder.Entity("SmartDealerships.DataAccess.Models.Company", b =>
                 {
-                    b.Navigation("Owners");
-
                     b.Navigation("Products");
                 });
 

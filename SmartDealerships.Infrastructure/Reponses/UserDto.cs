@@ -1,10 +1,12 @@
-namespace SmartDealerships.Infrastructure.DTO;
+namespace SmartDealerships.Infrastructure.Reponses;
 
-public class UserDTO
+public class UserDto
 {
     public int Id { get; set; }
     
     public string? FirstName { get; set; }
+
+    public string? RoleName { get; set; }
     
     public string? LastName { get; set; }
 

@@ -1,4 +1,4 @@
-namespace SmartDealerships.Infrastructure.Models;
+namespace SmartDealerships.DataAccess.Models;
 
 public class Company
 {
@@ -8,9 +8,9 @@ public class Company
     
     public string Description { get; set; }
     
-    public string Logo { get; set; }
-    
-    public virtual ICollection<User> Users { get; set; }
+    public byte[]? LogoImage { get; set; }
+
+    public virtual ICollection<User> Owners { get; set; }
     
     public virtual ICollection<Product> Products { get; set; }
 }

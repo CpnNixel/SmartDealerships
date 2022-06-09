@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace SmartDealerships.Infrastructure.Models;
+namespace SmartDealerships.DataAccess.Models;
 
 public class CartItem
 {

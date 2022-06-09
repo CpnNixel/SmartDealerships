@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartDealerships.DataAccess.PSQL;
@@ -11,9 +12,10 @@ using SmartDealerships.DataAccess.PSQL;
 namespace SmartDealerships.DataAccess.Migrations
 {
     [DbContext(typeof(DealershipDbContext))]
-    partial class DealershipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220607202816_AddedRolesAndSessions")]
+    partial class AddedRolesAndSessions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,21 @@ namespace SmartDealerships.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("CompanyUser", b =>
+                {
+                    b.Property<int>("CompaniesId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("CompaniesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("CompanyUser");
+                });
 
             modelBuilder.Entity("OrderDetailsProduct", b =>
                 {
@@ -67,50 +84,6 @@ namespace SmartDealerships.DataAccess.Migrations
                     b.ToTable("CartItems");
                 });
 
-            modelBuilder.Entity("SmartDealerships.DataAccess.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Spare parts"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Fuel filtes"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Battery"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Brake pads"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Brake rotor"
-                        });
-                });
-
             modelBuilder.Entity("SmartDealerships.DataAccess.Models.Company", b =>
                 {
                     b.Property<int>("Id")
@@ -123,8 +96,9 @@ namespace SmartDealerships.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<byte[]>("LogoImage")
-                        .HasColumnType("bytea");
+                    b.Property<string>("Logo")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -133,14 +107,6 @@ namespace SmartDealerships.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "",
-                            Name = "Truck shop"
-                        });
                 });
 
             modelBuilder.Entity("SmartDealerships.DataAccess.Models.OrderDetails", b =>
@@ -183,8 +149,8 @@ namespace SmartDealerships.DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Category")
+                        .HasColumnType("text");
 
                     b.Property<int>("CompanyId")
                         .HasColumnType("integer");
@@ -203,83 +169,9 @@ namespace SmartDealerships.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.HasIndex("CompanyId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 4,
-                            CompanyId = 1,
-                            Description = "Brakes squealing? Are you experiencing longer stopping distances? Get reliable, everyday performance for regular driving needs from Duralast brake pads, designed to meet your vehicles original equipment for form, fit, and function. Available only at AutoZone, Duralast brake pads use platform-specific, semi-metallic friction materials tailored to your vehicle. Replace rotors and hardware when replacing brake pads for better performance and less noise.",
-                            Name = "Duralast Ceramic Brake Pads",
-                            Price = 300.5m,
-                            Sku = "MKD503"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 4,
-                            CompanyId = 1,
-                            Description = "Brakes squealing? Are you experiencing longer stopping distances? Get reliable, everyday performance for regular driving needs from Duralast brake pads, designed to meet your vehicles original equipment for form, fit, and function. Available only at AutoZone, Duralast brake pads use platform-specific, semi-metallic friction materials tailored to your vehicle. Replace rotors and hardware when replacing brake pads for better performance and less noise.",
-                            Name = "Duralast Ceramic Brake Pads D924",
-                            Price = 36.99m,
-                            Sku = "D924"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 4,
-                            CompanyId = 1,
-                            Description = "Brakes squealing? Are you experiencing longer stopping distances? Get reliable, everyday performance for regular driving needs from Duralast brake pads, designed to meet your vehicles original equipment for form, fit, and function. Available only at AutoZone, Duralast brake pads use platform-specific, semi-metallic friction materials tailored to your vehicle. Replace rotors and hardware when replacing brake pads for better performance and less noise.",
-                            Name = "Duralast Ceramic Brake Pads D1339",
-                            Price = 44.49m,
-                            Sku = "D1339"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CategoryId = 5,
-                            CompanyId = 1,
-                            Description = "Engineered to properly remove heat from the brake system,OE compliance for equal or better rotor performance, reduced pulsation, and noise.",
-                            Name = "Duralast Brake Rotor 31069",
-                            Price = 59.99m,
-                            Sku = "31069"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CategoryId = 5,
-                            CompanyId = 1,
-                            Description = "Engineered to properly remove heat from the brake system,OE compliance for equal or better rotor performance, reduced pulsation, and noise.",
-                            Name = "Duralast Brake Rotor 55097",
-                            Price = 89.99m,
-                            Sku = "55097"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CategoryId = 5,
-                            CompanyId = 1,
-                            Description = "Engineered to properly remove heat from the brake system,OE compliance for equal or better rotor performance, reduced pulsation, and noise.",
-                            Name = "Duralast Brake Rotor 55072DL",
-                            Price = 79.99m,
-                            Sku = "55072DL"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CategoryId = 5,
-                            CompanyId = 1,
-                            Description = "Duralast® brand disc brake rotors are designed and engineered to match J431 and your vehicles original equipment performance. Our Duralast® rotors can replace your OE parts with no change in performance and safety. So when you need a part you can trust at a price you can afford.",
-                            Name = "Duralast Brake Rotor 5333",
-                            Price = 97.99m,
-                            Sku = "55072DL"
-                        });
                 });
 
             modelBuilder.Entity("SmartDealerships.DataAccess.Models.Role", b =>
@@ -332,10 +224,12 @@ namespace SmartDealerships.DataAccess.Migrations
                     b.Property<decimal>("Total")
                         .HasColumnType("numeric");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ShoppingSessions");
                 });
@@ -350,9 +244,6 @@ namespace SmartDealerships.DataAccess.Migrations
 
                     b.Property<string>("Address")
                         .HasColumnType("text");
-
-                    b.Property<int?>("CompanyId")
-                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -378,21 +269,13 @@ namespace SmartDealerships.DataAccess.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ShoppingSessionId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Telephone")
                         .HasMaxLength(13)
                         .HasColumnType("character varying(13)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
-
                     b.HasIndex("RoleId");
-
-                    b.HasIndex("ShoppingSessionId")
-                        .IsUnique();
 
                     b.ToTable("Users");
 
@@ -401,30 +284,43 @@ namespace SmartDealerships.DataAccess.Migrations
                         {
                             Id = 1,
                             Address = "Kharkiv city, Buchmy 50",
-                            CompanyId = 1,
-                            CreatedAt = new DateTime(2022, 6, 9, 21, 53, 58, 653, DateTimeKind.Utc).AddTicks(9211),
-                            Email = "john.doe@gmail.com",
+                            CreatedAt = new DateTime(2022, 6, 7, 23, 28, 15, 442, DateTimeKind.Utc).AddTicks(8089),
+                            Email = "am9obmRvZTI0MTA=",
                             FirstName = "John",
                             LastName = "Doe",
-                            ModifiedAt = new DateTime(2022, 6, 9, 21, 53, 58, 653, DateTimeKind.Utc).AddTicks(9255),
+                            ModifiedAt = new DateTime(2022, 6, 7, 23, 28, 15, 442, DateTimeKind.Utc).AddTicks(8149),
                             PasswordHash = "am9obmRvZTI0MTAK",
-                            RoleId = 1,
+                            RoleId = 2,
                             Telephone = "380662016"
                         },
                         new
                         {
                             Id = 2,
                             Address = "Pervomaiskiy",
-                            CompanyId = 1,
-                            CreatedAt = new DateTime(2022, 6, 9, 21, 53, 58, 653, DateTimeKind.Utc).AddTicks(9262),
+                            CreatedAt = new DateTime(2022, 6, 7, 23, 28, 15, 442, DateTimeKind.Utc).AddTicks(8160),
                             Email = "mykyta.kysil@nure.ua",
                             FirstName = "Mykyta",
                             LastName = "Kysil",
-                            ModifiedAt = new DateTime(2022, 6, 9, 21, 53, 58, 653, DateTimeKind.Utc).AddTicks(9265),
+                            ModifiedAt = new DateTime(2022, 6, 7, 23, 28, 15, 442, DateTimeKind.Utc).AddTicks(8165),
                             PasswordHash = "MTIwOTE5OTM=",
-                            RoleId = 2,
+                            RoleId = 1,
                             Telephone = "0662016521"
                         });
+                });
+
+            modelBuilder.Entity("CompanyUser", b =>
+                {
+                    b.HasOne("SmartDealerships.DataAccess.Models.Company", null)
+                        .WithMany()
+                        .HasForeignKey("CompaniesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SmartDealerships.DataAccess.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("OrderDetailsProduct", b =>
@@ -468,62 +364,43 @@ namespace SmartDealerships.DataAccess.Migrations
 
             modelBuilder.Entity("SmartDealerships.DataAccess.Models.Product", b =>
                 {
-                    b.HasOne("SmartDealerships.DataAccess.Models.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId");
-
-                    b.HasOne("SmartDealerships.DataAccess.Models.Company", "Company")
+                    b.HasOne("SmartDealerships.DataAccess.Models.Company", "SellingCompany")
                         .WithMany("Products")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
+                    b.Navigation("SellingCompany");
+                });
 
-                    b.Navigation("Company");
+            modelBuilder.Entity("SmartDealerships.DataAccess.Models.ShoppingSession", b =>
+                {
+                    b.HasOne("SmartDealerships.DataAccess.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SmartDealerships.DataAccess.Models.User", b =>
                 {
-                    b.HasOne("SmartDealerships.DataAccess.Models.Company", "Company")
-                        .WithMany("Owners")
-                        .HasForeignKey("CompanyId");
-
                     b.HasOne("SmartDealerships.DataAccess.Models.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SmartDealerships.DataAccess.Models.ShoppingSession", "ShoppingSession")
-                        .WithOne("User")
-                        .HasForeignKey("SmartDealerships.DataAccess.Models.User", "ShoppingSessionId");
-
-                    b.Navigation("Company");
-
                     b.Navigation("Role");
-
-                    b.Navigation("ShoppingSession");
-                });
-
-            modelBuilder.Entity("SmartDealerships.DataAccess.Models.Category", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("SmartDealerships.DataAccess.Models.Company", b =>
                 {
-                    b.Navigation("Owners");
-
                     b.Navigation("Products");
                 });
 
             modelBuilder.Entity("SmartDealerships.DataAccess.Models.ShoppingSession", b =>
                 {
                     b.Navigation("CartItems");
-
-                    b.Navigation("User")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

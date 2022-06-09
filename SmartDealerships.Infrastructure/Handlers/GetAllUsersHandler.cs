@@ -1,11 +1,12 @@
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SmartDealerships.DataAccess.Interfaces;
-using SmartDealerships.Infrastructure.DTO;
 using SmartDealerships.Infrastructure.Queries;
+using SmartDealerships.Infrastructure.Reponses;
 
 namespace SmartDealerships.Infrastructure.Handlers;
 
-public class GetAllUsersHandler : IRequestHandler<GetUsersByNothing, List<UserDTO>>
+public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, List<UserDto>>
 {
     private readonly IDealershipDbContext _dbContext;
 
@@ -14,11 +15,15 @@ public class GetAllUsersHandler : IRequestHandler<GetUsersByNothing, List<UserDT
         _dbContext = dbContext;
     }
 
-    public Task<List<UserDTO>> Handle(GetUsersByNothing req, CancellationToken ct)
+    public Task<List<UserDto>> Handle(GetAllUsersQuery req, CancellationToken ct)
     {
-        var users = _dbContext.Users.ToList();
+        var users = _dbContext.Users.Include(x => x.Role);
+        if (!users.Any())
+        {
+            throw new Exception("no users were found");
+        }
         
-        return Task.FromResult(users.Select(u => new UserDTO
+        return Task.FromResult(users.Select(u => new UserDto
         {
             Id = u.Id,
             FirstName = u.FirstName,
@@ -26,7 +31,8 @@ public class GetAllUsersHandler : IRequestHandler<GetUsersByNothing, List<UserDT
             Address = u.Address,
             Telephone = u.Telephone,
             CreatedAt = u.CreatedAt,
-            ModifiedAt = u.ModifiedAt
+            ModifiedAt = u.ModifiedAt,
+            RoleName = u.Role.RoleName
         }).ToList());
     }
 }

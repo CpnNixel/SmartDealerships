@@ -6,18 +6,18 @@ namespace SmartDealerships.WebApi.Features.Users;
 
 public class GetAllUsersEndpoint : EndpointWithoutRequest<UsersResponse>
 {
+    public IMediator mediator { get; set; }
+
     public override void Configure()
     {
         Verbs(Http.GET);
-        Routes("getallusers");
-        AllowAnonymous();
+        Routes("get-all-users");
+        Roles("admin");
     }
-
-    public IMediator mediator { get; set; }
     
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var users = mediator.Send(new GetUsersByNothing(), ct);
+        var users = mediator.Send(new GetAllUsersQuery(), ct);
         
         if (!users.Result.Any())
             await SendNotFoundAsync(ct);
