@@ -8,7 +8,7 @@ namespace SmartDealerships.Infrastructure.Handlers;
 
 public class GetAllProductsHandler : IRequestHandler<GetAllProductsQuery, List<ProductDto>>
 {
-    public IDealershipDbContext _dbContext { get; set; }
+    private readonly IDealershipDbContext _dbContext;
 
     public GetAllProductsHandler(IDealershipDbContext dbContext)
     {

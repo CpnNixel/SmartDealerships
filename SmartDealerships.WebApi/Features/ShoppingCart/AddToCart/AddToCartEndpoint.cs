@@ -1,5 +1,6 @@
 using FastEndpoints;
 using MediatR;
+using SmartDealerships.Infrastructure.Commands;
 
 namespace SmartDealerships.WebApi.Features.ShoppingCart.AddToCart;
 
@@ -16,8 +17,16 @@ public class AddToCartEndpoint : Endpoint<AddToCartRequest, AddToCartResponse>
 
     public override async Task HandleAsync(AddToCartRequest req, CancellationToken ct)
     {
-        //items, create command
-        //send command to mediator
-        //get result
+        var res = mediator.Send(new AddToCartCommand(req.UserId,
+            req.ProductIdAndQty.Select(p => new CartItemDto(p.ProductId, p.ProductQty)).ToList()));
+
+        if (res.Result.Any())
+        {
+            await SendOkAsync(new AddToCartResponse("success"), ct);
+        }
+        else
+        {
+            await SendNotFoundAsync(ct);
+        }
     }
 }

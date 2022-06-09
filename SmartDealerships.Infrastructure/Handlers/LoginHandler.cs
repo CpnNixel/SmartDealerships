@@ -38,6 +38,19 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDto>
         {
             return new LoginResponseDto();
         }
+        
+        var sessions = _dbContext.ShoppingSessions
+            .Where(u => u.UserId == user.Id);
+
+        user.ShoppingSession = null;
+        foreach (var userItem in _dbContext.CartItems
+                     .Include(x => x.ShoppingSession)
+                     .Where(i => i.ShoppingSession.UserId == user.Id))
+        {
+            userItem.ShoppingSession = null;
+        }
+        
+        _dbContext.ShoppingSessions.RemoveRange(sessions);
 
         var token = GenerateToken();
 

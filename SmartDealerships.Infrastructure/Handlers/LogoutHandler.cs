@@ -19,14 +19,19 @@ public class LogoutHandler : IRequestHandler<LogoutCommand, bool>
         _dbContext.Users.ToList()
             .FirstOrDefault(u => u.Id == req.UserId)!
             .ShoppingSession = null;
+
+        foreach (var userItem in _dbContext.CartItems
+                     .Include(x => x.ShoppingSession)
+                     .Where(i => i.ShoppingSession.UserId == req.UserId))
+        {
+            userItem.ShoppingSession = null;
+        }
         
         var sessions = _dbContext.ShoppingSessions
             .Where(u => u.UserId == req.UserId);
         
         _dbContext.ShoppingSessions.RemoveRange(sessions);
         
-        // _dbContext.ShoppingSessions.RemoveRange(sessions);
-
         await _dbContext.SaveChangesAsync(ct);
         return true;
     }

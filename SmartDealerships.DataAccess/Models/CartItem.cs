@@ -8,12 +8,16 @@ public class CartItem
 
     public int? ShoppingSessionId { get; set; }
 
-    public ShoppingSession ShoppingSession { get; set; }
+    public ShoppingSession? ShoppingSession { get; set; }
+    
+    public int? ProductId { get; set; }
+
+    public Product Product { get; set; }
     
     [Required]
     public int Qty { get; set; }
-
-    public decimal Total { get; set; }
+    
+    public decimal Price { get; set; }
     
     public DateTime CreatedAt {get; set; }
     
