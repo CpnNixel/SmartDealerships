@@ -38,10 +38,10 @@ public class CheckoutHandler : IRequestHandler<CheckoutCommand, string>
             ModifiedAt = DateTime.Now.SetKindUtc()
         });
 
-        await _mediator.Send(new EmptyCartCommand(request.UserToken), ct);
-
         await _dbContext.SaveChangesAsync(ct);
-
+        
+        await _mediator.Send(new EmptyCartCommand(request.UserToken), ct);
+        
         return "success";
     }
 }
