@@ -3,7 +3,7 @@ using SmartDealerships.DataAccess.Extensions;
 using SmartDealerships.DataAccess.Interfaces;
 using SmartDealerships.DataAccess.Models;
 using SmartDealerships.Infrastructure.Commands;
-using SmartDealerships.Infrastructure.Reponses;
+using SmartDealerships.Infrastructure.Responses;
 
 namespace SmartDealerships.Infrastructure.Handlers;
 

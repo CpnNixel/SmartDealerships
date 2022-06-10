@@ -2,13 +2,13 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SmartDealerships.DataAccess.Interfaces;
 using SmartDealerships.Infrastructure.Queries;
-using SmartDealerships.Infrastructure.Reponses;
+using SmartDealerships.Infrastructure.Responses;
 
 namespace SmartDealerships.Infrastructure.Handlers;
 
 public class GetAllProductsHandler : IRequestHandler<GetAllProductsQuery, List<ProductDto>>
 {
-    public IDealershipDbContext _dbContext { get; set; }
+    private readonly IDealershipDbContext _dbContext;
 
     public GetAllProductsHandler(IDealershipDbContext dbContext)
     {

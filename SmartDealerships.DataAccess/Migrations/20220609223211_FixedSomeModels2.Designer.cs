@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartDealerships.DataAccess.PSQL;
@@ -11,9 +12,10 @@ using SmartDealerships.DataAccess.PSQL;
 namespace SmartDealerships.DataAccess.Migrations
 {
     [DbContext(typeof(DealershipDbContext))]
-    partial class DealershipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220609223211_FixedSomeModels2")]
+    partial class FixedSomeModels2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -407,11 +409,11 @@ namespace SmartDealerships.DataAccess.Migrations
                             Id = 1,
                             Address = "Kharkiv city, Buchmy 50",
                             CompanyId = 1,
-                            CreatedAt = new DateTime(2022, 6, 10, 2, 12, 8, 589, DateTimeKind.Utc).AddTicks(7411),
+                            CreatedAt = new DateTime(2022, 6, 10, 1, 32, 10, 711, DateTimeKind.Utc).AddTicks(5589),
                             Email = "john.doe@gmail.com",
                             FirstName = "John",
                             LastName = "Doe",
-                            ModifiedAt = new DateTime(2022, 6, 10, 2, 12, 8, 589, DateTimeKind.Utc).AddTicks(7462),
+                            ModifiedAt = new DateTime(2022, 6, 10, 1, 32, 10, 711, DateTimeKind.Utc).AddTicks(5631),
                             PasswordHash = "am9obmRvZTI0MTAK",
                             RoleId = 1,
                             Telephone = "380662016"
@@ -421,11 +423,11 @@ namespace SmartDealerships.DataAccess.Migrations
                             Id = 2,
                             Address = "Pervomaiskiy",
                             CompanyId = 1,
-                            CreatedAt = new DateTime(2022, 6, 10, 2, 12, 8, 589, DateTimeKind.Utc).AddTicks(7473),
+                            CreatedAt = new DateTime(2022, 6, 10, 1, 32, 10, 711, DateTimeKind.Utc).AddTicks(5638),
                             Email = "mykyta.kysil@nure.ua",
                             FirstName = "Mykyta",
                             LastName = "Kysil",
-                            ModifiedAt = new DateTime(2022, 6, 10, 2, 12, 8, 589, DateTimeKind.Utc).AddTicks(7478),
+                            ModifiedAt = new DateTime(2022, 6, 10, 1, 32, 10, 711, DateTimeKind.Utc).AddTicks(5642),
                             PasswordHash = "MTIwOTE5OTM=",
                             RoleId = 2,
                             Telephone = "0662016521"

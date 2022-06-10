@@ -7,18 +7,21 @@ using Microsoft.IdentityModel.Tokens;
 using SmartDealerships.DataAccess.Extensions;
 using SmartDealerships.DataAccess.Interfaces;
 using SmartDealerships.DataAccess.Models;
+using SmartDealerships.Infrastructure.Commands;
 using SmartDealerships.Infrastructure.Queries;
-using SmartDealerships.Infrastructure.Reponses;
+using SmartDealerships.Infrastructure.Responses;
 
 namespace SmartDealerships.Infrastructure.Handlers;
 
 public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDto>
 {
     private readonly IDealershipDbContext _dbContext;
+    private readonly IMediator Mediator;
 
-    public LoginHandler(IDealershipDbContext dbContext)
+    public LoginHandler(IDealershipDbContext dbContext, IMediator mediator)
     {
         _dbContext = dbContext;
+        Mediator = mediator;
     }
 
     public async Task<LoginResponseDto> Handle(LoginUserQuery request, CancellationToken ct)
@@ -38,12 +41,29 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDto>
         {
             return new LoginResponseDto();
         }
+        
+        var sessions = _dbContext.ShoppingSessions
+            .Where(u => u.UserId == user.Id);
+
+        if (sessions.Any())
+        {
+            Mediator.Send(new LogoutCommand(user.Id), ct);
+        }
+        // user.ShoppingSession = null;
+        // foreach (var userItem in _dbContext.CartItems
+        //              .Include(x => x.ShoppingSession)
+        //              .Where(i => i.ShoppingSession.UserId == user.Id))
+        // {
+        //     userItem.ShoppingSession = null;
+        // }
+        //
+        // _dbContext.ShoppingSessions.RemoveRange(sessions);
 
         var token = GenerateToken();
 
         await CreateSession(user, token);
 
-        return new LoginResponseDto {IsSuccessful = true, Token = GenerateToken()};
+        return new LoginResponseDto {IsSuccessful = true, Token = token};
         
     }
 

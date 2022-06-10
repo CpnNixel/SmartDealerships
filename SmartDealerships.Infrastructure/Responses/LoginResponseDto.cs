@@ -1,4 +1,4 @@
-namespace SmartDealerships.Infrastructure.Reponses;
+namespace SmartDealerships.Infrastructure.Responses;
 
 public class LoginResponseDto
 {

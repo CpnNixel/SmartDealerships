@@ -2,6 +2,11 @@ namespace SmartDealerships.DataAccess.Models;
 
 public class ShoppingSession
 {
+    public ShoppingSession()
+    {
+        CartItems = new List<CartItem>();
+    }
+    
     public int Id { get; set; }
     
     public int UserId { get; set; }
@@ -17,4 +22,5 @@ public class ShoppingSession
     public DateTime CreatedAt {get; set; }
     
     public DateTime ModifiedAt {get; set; }
+
 }
