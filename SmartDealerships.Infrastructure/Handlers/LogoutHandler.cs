@@ -24,6 +24,7 @@ public class LogoutHandler : IRequestHandler<LogoutCommand, bool>
                      .Include(x => x.ShoppingSession)
                      .Where(i => i.ShoppingSession.UserId == req.UserId))
         {
+            userItem.ShoppingSessionId = 0;
             userItem.ShoppingSession = null;
         }
         

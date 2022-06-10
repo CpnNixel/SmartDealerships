@@ -20,7 +20,7 @@ public class GetCartStatusEndpoint : Endpoint<GetCartStatusRequest, GetCartStatu
     {
         var res = Mediator.Send(new GetCartStatusQuery(req.UserToken));
         
-        if (res.Result.Items.Any())
+        if (res.IsCompletedSuccessfully && res.Result.Items.Any())
         {
             await SendOkAsync(new GetCartStatusResponse
             {

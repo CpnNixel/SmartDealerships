@@ -19,6 +19,7 @@ public class EmptyCartHandler : IRequestHandler<EmptyCartCommand, string>
     public async Task<string> Handle(EmptyCartCommand request, CancellationToken ct)
     {
         var session = await _dbContext.ShoppingSessions
+            .Include(s=>s.CartItems)
             .FirstOrDefaultAsync(s => s.Token == request.UserToken, ct);
 
         if (session == null) 

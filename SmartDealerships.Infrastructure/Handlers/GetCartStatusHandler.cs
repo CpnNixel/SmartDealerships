@@ -27,7 +27,7 @@ public class GetCartStatusHandler : IRequestHandler<GetCartStatusQuery, CartStat
         if (cart == null)
             throw new Exception("session is null");
 
-        if (!cart.CartItems.Any())
+        if (cart.CartItems.Count < 1)
         {
             return new CartStatusDto {Total = 0};
         }
