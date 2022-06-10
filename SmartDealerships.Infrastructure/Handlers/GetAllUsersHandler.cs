@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SmartDealerships.DataAccess.Interfaces;
 using SmartDealerships.Infrastructure.Queries;
-using SmartDealerships.Infrastructure.Reponses;
+using SmartDealerships.Infrastructure.Responses;
 
 namespace SmartDealerships.Infrastructure.Handlers;
 

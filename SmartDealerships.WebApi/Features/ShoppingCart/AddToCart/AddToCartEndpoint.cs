@@ -17,8 +17,8 @@ public class AddToCartEndpoint : Endpoint<AddToCartRequest, AddToCartResponse>
 
     public override async Task HandleAsync(AddToCartRequest req, CancellationToken ct)
     {
-        var res = mediator.Send(new AddToCartCommand(req.UserId,
-            req.ProductIdAndQty.Select(p => new CartItemDto(p.ProductId, p.ProductQty)).ToList()));
+        var res = mediator.Send(new AddToCartCommand(req.UserToken,
+            req.ProductIdAndQty.Select(p => new CartItemMini(p.ProductId, p.ProductQty)).ToList()));
 
         if (res.Result.Any())
         {

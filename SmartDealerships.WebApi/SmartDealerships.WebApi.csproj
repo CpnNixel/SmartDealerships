@@ -27,8 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\ShoppingCart\EmptyCart" />
-    <Folder Include="Features\ShoppingCart\GetCartStatus" />
     <Folder Include="Features\ShoppingCart\ProceedToCheckout" />
   </ItemGroup>
 

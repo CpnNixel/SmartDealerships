@@ -1,4 +1,4 @@
-using SmartDealerships.Infrastructure.Reponses;
+using SmartDealerships.Infrastructure.Responses;
 
 namespace SmartDealerships.WebApi.Features.Users;
 

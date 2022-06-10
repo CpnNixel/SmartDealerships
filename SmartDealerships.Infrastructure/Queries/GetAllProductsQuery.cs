@@ -1,5 +1,5 @@
 using MediatR;
-using SmartDealerships.Infrastructure.Reponses;
+using SmartDealerships.Infrastructure.Responses;
 
 namespace SmartDealerships.Infrastructure.Queries;
 

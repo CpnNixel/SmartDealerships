@@ -1,10 +1,12 @@
+using SmartDealerships.WebApi.Common;
+
 namespace SmartDealerships.WebApi.Features.ShoppingCart.AddToCart;
 
 public class AddToCartRequest
 {
-    public AddToCartRequest(int userId, List<CartItem> productIdAndQty)
+    public AddToCartRequest(string userToken, List<CartItem> productIdAndQty)
     {
-        UserId = userId;
+        UserToken = userToken;
         ProductIdAndQty = productIdAndQty;
     }
     
@@ -12,7 +14,7 @@ public class AddToCartRequest
     {
     }
     
-    public int UserId { get; init; }
+    public string UserToken { get; init; }
     
     public List<CartItem> ProductIdAndQty { get; init; }
 }
@@ -24,17 +26,16 @@ public struct CartItem
 }
 
 
-public class AddToCartResponse
+public class AddToCartResponse : BaseResponse
 {
-    public AddToCartResponse(string message)
+    public AddToCartResponse(string message) 
+        : base(message)
     {
-        Message = message;
     }
 
     public AddToCartResponse()
+        :base()
     {
     }
-
-    public string Message { get; init; }
 }
 

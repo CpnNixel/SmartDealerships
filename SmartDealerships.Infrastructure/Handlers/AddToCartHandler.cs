@@ -19,7 +19,7 @@ public class AddToCartHandler : IRequestHandler<AddToCartCommand, string>
     public async Task<string> Handle(AddToCartCommand request, CancellationToken ct)
     {
         var session = await _dbContext.ShoppingSessions
-            .FirstOrDefaultAsync(s => s.UserId == request.UserId, ct);
+            .FirstOrDefaultAsync(s => s.Token == request.UserToken, ct);
 
         if (session == null) 
             throw new Exception("session is null");
@@ -35,12 +35,12 @@ public class AddToCartHandler : IRequestHandler<AddToCartCommand, string>
             }
         }
         
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(ct);
         return "success";
 
     }
 
-    private CartItem Map(CartItemDto item, int sessionId)
+    private CartItem Map(CartItemMini item, int sessionId)
     {
         decimal price = _dbContext.Products.First(product => product.Id == item.ProductId).Price;
         

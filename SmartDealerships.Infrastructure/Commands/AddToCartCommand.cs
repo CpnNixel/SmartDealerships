@@ -4,15 +4,15 @@ namespace SmartDealerships.Infrastructure.Commands;
 
 public class AddToCartCommand : IRequest<string>
 {
-    public AddToCartCommand(int userId, List<CartItemDto> cartItems)
+    public AddToCartCommand(string userToken, List<CartItemMini> cartItems)
     {
-        UserId = userId;
+        UserToken = userToken;
         CartItems = cartItems;
     }
     
-    public int UserId { get; init; }
+    public string UserToken{ get; init; }
     
-    public List<CartItemDto> CartItems { get; init; }
+    public List<CartItemMini> CartItems { get; init; }
 }
 
-public record CartItemDto (int ProductId, int Quantity);
+public record CartItemMini (int ProductId, int Quantity);
