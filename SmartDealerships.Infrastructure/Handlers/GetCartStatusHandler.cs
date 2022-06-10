@@ -18,26 +18,33 @@ public class GetCartStatusHandler : IRequestHandler<GetCartStatusQuery, CartStat
 
     public async Task<CartStatusDto> Handle(GetCartStatusQuery request, CancellationToken ct)
     {
-        var cart = await _dbContext.ShoppingSessions
+        var session = await _dbContext.ShoppingSessions
             .Include(s => s.CartItems)
             .ThenInclude(i => i.Product)
             .ThenInclude(p=>p.Category)
             .FirstOrDefaultAsync(s => s.Token == request.UserToken, ct);
 
-        if (cart == null)
+        if (session == null)
             throw new Exception("session is null");
 
-        if (cart.CartItems.Count < 1)
+        if (session.CartItems.Count < 1)
         {
             return new CartStatusDto {Total = 0};
         }
 
-
-        return new CartStatusDto
+        var cart = new CartStatusDto();
+        try
         {
-            Total = cart.Total,
-            Items = cart.CartItems.ToList().Select(Map)
-        };
+            cart.Total = session.Total;
+            cart.Items = session.CartItems.ToList().Select(Map);
+
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+
+        return cart;
     }
 
     private CartItemDto Map(CartItem item)

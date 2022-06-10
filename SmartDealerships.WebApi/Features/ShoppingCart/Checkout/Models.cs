@@ -1,8 +1,6 @@
-using SmartDealerships.WebApi.Common;
-
 namespace SmartDealerships.WebApi.Features.ShoppingCart.Checkout;
 
-public class CheckoutRequest
+public class CheckoutRequest 
 {
     public CheckoutRequest(string userToken)
     {
@@ -12,17 +10,20 @@ public class CheckoutRequest
     public CheckoutRequest()
     {
     }
-    
+
     public string UserToken { get; set; }
 }
 
-public class CheckoutResponse : BaseResponse
+public class CheckoutResponse
 {
-    public CheckoutResponse(string message) : base(message)
+    public CheckoutResponse(string message)
     {
+        Message = message;
     }
 
-    public CheckoutResponse() : base()
+    public CheckoutResponse()
     {
     }
+    
+    public string Message { get; set; }
 }

@@ -12,13 +12,13 @@ public class LogoutEndpoint : Endpoint<LogoutRequest, LogoutResponse>
     public override void Configure()
     {
         Verbs(Http.POST);
-        Routes("logout");
+        Routes("account/logout");
         AllowAnonymous();
     }
 
     public override async Task HandleAsync(LogoutRequest req, CancellationToken ct)
     {
-        var res = mediator.Send(new LogoutCommand(req.UserId), ct);
+        var res = mediator.Send(new LogoutCommand(req.UserToken), ct);
         
         if (res.Result)
             await SendOkAsync(new LogoutResponse {Message = "Successful"}, ct);

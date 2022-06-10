@@ -1,5 +1,3 @@
-using SmartDealerships.WebApi.Common;
-
 namespace SmartDealerships.WebApi.Features.ShoppingCart.AddToCart;
 
 public class AddToCartRequest
@@ -26,16 +24,17 @@ public struct CartItem
 }
 
 
-public class AddToCartResponse : BaseResponse
+public class AddToCartResponse
 {
-    public AddToCartResponse(string message) 
-        : base(message)
+    public AddToCartResponse(string message)
     {
+        Message = message;
     }
 
     public AddToCartResponse()
-        :base()
     {
     }
+
+    public string Message { get; set; }
 }
 

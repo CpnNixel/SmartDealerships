@@ -1,30 +1,29 @@
-using SmartDealerships.WebApi.Common;
-
 namespace SmartDealerships.WebApi.Features.ShoppingCart.EmptyCart;
 
-public class EmptyCartRequest : BaseRequest
+public class EmptyCartRequest
 {
     public EmptyCartRequest(string userToken)
-        : base(userToken)
     {
+        UserToken = userToken;
     }
 
     public EmptyCartRequest()
-        : base()
     {
     }
+
+    public string UserToken { get; set; }
 }
 
-public class EmptyCartResponse : BaseResponse
+public class EmptyCartResponse 
 {
-    public EmptyCartResponse(string message) 
-        : base(message)
+    public EmptyCartResponse(string message)
     {
+        Message = message;
     }
 
     public EmptyCartResponse()
-        : base()
     {
     }
 
+    public string Message { get; set; }
 }

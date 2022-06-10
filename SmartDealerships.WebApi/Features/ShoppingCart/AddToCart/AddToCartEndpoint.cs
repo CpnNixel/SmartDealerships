@@ -11,7 +11,7 @@ public class AddToCartEndpoint : Endpoint<AddToCartRequest, AddToCartResponse>
     public override void Configure()
     {
         Verbs(Http.POST);
-        Routes("add-to-cart");
+        Routes("cart/add");
         Roles("user", "admin");
     }
 

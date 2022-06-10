@@ -11,7 +11,7 @@ public class CheckoutEndpoint : Endpoint<CheckoutRequest, CheckoutResponse>
     public override void Configure()
     {
         Verbs(Http.POST);
-        Routes("cart-checkout");
+        Routes("cart/checkout");
         Roles("admin", "user");
     }
 

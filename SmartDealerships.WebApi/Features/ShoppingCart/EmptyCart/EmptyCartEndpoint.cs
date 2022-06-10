@@ -11,7 +11,7 @@ public class EmptyCartEndpoint : Endpoint<EmptyCartRequest, EmptyCartResponse>
     public override void Configure()
     {
         Verbs(Http.PUT);
-        Routes("empty-cart");
+        Routes("cart/empty");
         Roles("admin", "user");
     }
 

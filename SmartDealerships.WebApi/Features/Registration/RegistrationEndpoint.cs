@@ -13,7 +13,7 @@ public class RegistrationEndpoint : Endpoint<RegistrationRequest, RegistrationRe
     public override void Configure()
     {
         Verbs(Http.POST);
-        Routes("register");
+        Routes("account/register");
         AllowAnonymous();
     }
 

@@ -4,11 +4,11 @@ namespace SmartDealerships.Infrastructure.Commands;
 
 public class LogoutCommand : IRequest<bool>
 {
-    public LogoutCommand(int userId)
+    public LogoutCommand(string userToken)
     {
-        UserId = userId;
+        UserToken = userToken;
     }
     
-    public  int  UserId { get; init; }
+    public  string UserToken { get; init; }
 
 }

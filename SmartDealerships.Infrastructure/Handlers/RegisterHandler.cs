@@ -24,7 +24,6 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, LoginResponseDto
             FirstName = req.FirstName,
             LastName = req.LastName,
             RoleId = 1,
-            Role = new Role {RoleName = "User"},
             PasswordHash = LoginHandler.Base64Encode(req.Password),
             Address = req.Address,
             Telephone = req.Telephone,

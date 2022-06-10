@@ -11,7 +11,7 @@ public class LoginEndpoint  : Endpoint<LoginRequest, LoginResponse>
     public override void Configure()
     {
         Verbs(Http.POST);
-        Routes("login");
+        Routes("account/login");
         AllowAnonymous();
     }
     

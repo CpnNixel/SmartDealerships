@@ -1,4 +1,3 @@
-using System.Net;
 using FastEndpoints;
 using MediatR;
 using SmartDealerships.Infrastructure.Queries;
@@ -12,7 +11,7 @@ public class GetCartStatusEndpoint : Endpoint<GetCartStatusRequest, GetCartStatu
     public override void Configure()
     {
         Verbs(Http.GET);
-        Routes("get-cart-status");
+        Routes("cart/status");
         Roles("admin", "user");
     }
 
@@ -20,7 +19,7 @@ public class GetCartStatusEndpoint : Endpoint<GetCartStatusRequest, GetCartStatu
     {
         var res = Mediator.Send(new GetCartStatusQuery(req.UserToken));
         
-        if (res.IsCompletedSuccessfully && res.Result.Items.Any())
+        if (res.Result.Items != null && res.Result.Items.Any())
         {
             await SendOkAsync(new GetCartStatusResponse
             {
