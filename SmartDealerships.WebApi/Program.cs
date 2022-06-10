@@ -12,6 +12,9 @@ using SmartDealerships.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddFastEndpoints();
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 builder.Services.AddSwaggerDoc();
 builder.Services.AddAuthentication(opt =>
     {

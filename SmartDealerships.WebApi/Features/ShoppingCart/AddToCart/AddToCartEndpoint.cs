@@ -8,16 +8,27 @@ public class AddToCartEndpoint : Endpoint<AddToCartRequest, AddToCartResponse>
 {
     public IMediator mediator { get; set; }
     
+    public IHttpContextAccessor _httpContextAccessor { get; set; }
+
     public override void Configure()
     {
         Verbs(Http.POST);
-        Routes("add-to-cart");
+        Routes("cart/add");
         Roles("user", "admin");
     }
 
     public override async Task HandleAsync(AddToCartRequest req, CancellationToken ct)
     {
-        var res = mediator.Send(new AddToCartCommand(req.UserToken,
+        string authorizationHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+        
+        if (string.IsNullOrEmpty(authorizationHeader))
+        {
+            await SendErrorsAsync(StatusCodes.Status401Unauthorized, ct);
+        }
+        
+        string  token = authorizationHeader.Substring(7);
+        
+        var res = mediator.Send(new AddToCartCommand(token,
             req.ProductIdAndQty.Select(p => new CartItemMini(p.ProductId, p.ProductQty)).ToList()));
 
         if (res.Result.Any())

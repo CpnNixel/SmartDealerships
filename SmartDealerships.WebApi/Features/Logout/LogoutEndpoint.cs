@@ -4,25 +4,35 @@ using SmartDealerships.Infrastructure.Commands;
 
 namespace SmartDealerships.WebApi.Features.Logout;
 
-public class LogoutEndpoint : Endpoint<LogoutRequest, LogoutResponse>
+public class LogoutEndpoint : EndpointWithoutRequest<LogoutResponse>
 {
     public IMediator mediator { get; set; }
         
-
+    public IHttpContextAccessor _httpContextAccessor { get; set; }
+    
     public override void Configure()
     {
         Verbs(Http.POST);
-        Routes("logout");
-        AllowAnonymous();
+        Routes("account/logout");
+        Roles("user", "admin");
     }
 
-    public override async Task HandleAsync(LogoutRequest req, CancellationToken ct)
+    public override async Task HandleAsync(CancellationToken ct)
     {
-        var res = mediator.Send(new LogoutCommand(req.UserId), ct);
+        string authorizationHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+        
+        if (string.IsNullOrEmpty(authorizationHeader))
+        {
+            await SendErrorsAsync(StatusCodes.Status401Unauthorized);
+        }
+        
+        string  token = authorizationHeader.Substring(7);
+        
+        var res = mediator.Send(new LogoutCommand(token), ct);
         
         if (res.Result)
             await SendOkAsync(new LogoutResponse {Message = "Successful"}, ct);
         else
-            await SendErrorsAsync(400, ct);
+            await SendErrorsAsync(404, ct);
     }
 }

@@ -1,29 +1,17 @@
 using SmartDealerships.Infrastructure.Responses;
-using SmartDealerships.WebApi.Common;
-
 namespace SmartDealerships.WebApi.Features.ShoppingCart.GetCartStatus;
 
-public class GetCartStatusRequest : BaseRequest
+public class GetCartStatusResponse
 {
-    public GetCartStatusRequest(string userToken) : base(userToken)
+    public GetCartStatusResponse(string message)
     {
-    }
-    
-    public GetCartStatusRequest() : base()
-    {
-    }
-}
-
-public class GetCartStatusResponse : BaseResponse
-{
-    public GetCartStatusResponse(string message) : base(message)
-    {
+        Message = message;
     }
 
-    public GetCartStatusResponse() : base()
+    public GetCartStatusResponse()
     {
     }
-    
+    public string Message { get; set; }
     public decimal Total { get; set; }
     
     public IEnumerable<CartItemDto> Items { get; set; }

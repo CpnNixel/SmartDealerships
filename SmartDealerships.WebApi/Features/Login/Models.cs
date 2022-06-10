@@ -15,10 +15,22 @@ public class LoginResponse
     public string? Token { get; set; }
 }
 
-public class Validator : Validator<LoginRequest>
+public class LoginValidator : Validator<LoginRequest>
 {
-    public Validator()
+    public LoginValidator()
     {
+        RuleFor(x => x.Email)
+            .NotEmpty().WithMessage("email address is required!")
+            .EmailAddress()
+            .Length(6, 40)
+            .WithMessage("the format of your email address is wrong!");
+
+        RuleFor(x => x.Password)
+            .NotEmpty().WithMessage("{PropertyName} is required.")
+            .Length(6, 40);
+        
+        // WithMessage("{PropertyName} must be pass date.");
+
         // RuleFor(x => x.FirstName)
         //     .NotEmpty().WithMessage("{PropertyName} is required.")
         //     .Length(3, 50).WithMessage("{PropertyName} must be between 3 and 50 characters.");

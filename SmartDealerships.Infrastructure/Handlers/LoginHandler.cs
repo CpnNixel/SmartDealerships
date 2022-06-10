@@ -31,8 +31,6 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDto>
             return new LoginResponseDto();
         }
 
-        //Logout? =>   mediator.Send(new LogoutCommand(req.UserId), ct);
-
         var user = await _dbContext.Users.FirstOrDefaultAsync(
             u => u.Email == request.Email 
                  && u.PasswordHash == Base64Encode(request.Password), ct);
@@ -41,23 +39,20 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDto>
         {
             return new LoginResponseDto();
         }
+
+        #region Change to trigger BEFORE INSERT CONSTRAINT UniqueSessionPerUser
         
         var sessions = _dbContext.ShoppingSessions
-            .Where(u => u.UserId == user.Id);
+            .Where(u => u.UserId == user.Id)
+            .Include(s => s.CartItems);
+        
+        _dbContext.CartItems.RemoveRange(sessions.SelectMany(s=>s.CartItems));
+        
+        _dbContext.ShoppingSessions.RemoveRange(sessions);
 
-        if (sessions.Any())
-        {
-            Mediator.Send(new LogoutCommand(user.Id), ct);
-        }
-        // user.ShoppingSession = null;
-        // foreach (var userItem in _dbContext.CartItems
-        //              .Include(x => x.ShoppingSession)
-        //              .Where(i => i.ShoppingSession.UserId == user.Id))
-        // {
-        //     userItem.ShoppingSession = null;
-        // }
-        //
-        // _dbContext.ShoppingSessions.RemoveRange(sessions);
+        await _dbContext.SaveChangesAsync(ct);
+
+        #endregion
 
         var token = GenerateToken();
 
@@ -70,7 +65,6 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDto>
     private async Task CreateSession(User user, string token)
     {
         _dbContext.ShoppingSessions.Add(
-        
             new ShoppingSession
             {
                 UserId = user.Id,
@@ -79,7 +73,6 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDto>
                 Total = 0,
                 CreatedAt = DateTime.Now.SetKindUtc(),
                 ModifiedAt = DateTime.Now.SetKindUtc(),
-
             }
         );
 
