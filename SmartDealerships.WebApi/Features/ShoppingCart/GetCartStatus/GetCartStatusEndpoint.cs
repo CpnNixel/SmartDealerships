@@ -4,10 +4,12 @@ using SmartDealerships.Infrastructure.Queries;
 
 namespace SmartDealerships.WebApi.Features.ShoppingCart.GetCartStatus;
 
-public class GetCartStatusEndpoint : Endpoint<GetCartStatusRequest, GetCartStatusResponse>
+public class GetCartStatusEndpoint : EndpointWithoutRequest<GetCartStatusResponse>
 {
     public IMediator Mediator { get; set; }
 
+    public IHttpContextAccessor _httpContextAccessor { get; set; }
+    
     public override void Configure()
     {
         Verbs(Http.GET);
@@ -15,9 +17,18 @@ public class GetCartStatusEndpoint : Endpoint<GetCartStatusRequest, GetCartStatu
         Roles("admin", "user");
     }
 
-    public override async Task HandleAsync(GetCartStatusRequest req, CancellationToken ct)
+    public override async Task HandleAsync(CancellationToken ct)
     {
-        var res = Mediator.Send(new GetCartStatusQuery(req.UserToken));
+        string authorizationHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+        
+        if (string.IsNullOrEmpty(authorizationHeader))
+        {
+            await SendErrorsAsync(StatusCodes.Status401Unauthorized);
+        }
+        
+        string  token = authorizationHeader.Substring(7);
+        
+        var res = Mediator.Send(new GetCartStatusQuery(token));
         
         if (res.Result.Items != null && res.Result.Items.Any())
         {

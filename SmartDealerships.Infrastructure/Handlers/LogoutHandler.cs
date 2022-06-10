@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SmartDealerships.DataAccess.Interfaces;
+using SmartDealerships.DataAccess.Models;
 using SmartDealerships.Infrastructure.Commands;
 
 namespace SmartDealerships.Infrastructure.Handlers;
@@ -16,20 +17,18 @@ public class LogoutHandler : IRequestHandler<LogoutCommand, bool>
 
     public async Task<bool> Handle(LogoutCommand req, CancellationToken ct)
     {
-        
-        foreach (var userItem in _dbContext.CartItems
-                     .Include(x => x.ShoppingSession)
-                     .Where(i => i.ShoppingSession.Token == req.UserToken))
-        {
-            userItem.ShoppingSessionId = 0;
-            userItem.ShoppingSession = null;
-        }
-        
         var sessions = _dbContext.ShoppingSessions
-            .Where(u => u.Token == req.UserToken);
+            .Where(u => u.Token == req.UserToken)
+            .Include(s => s.CartItems);
         
-        _dbContext.ShoppingSessions.RemoveRange(sessions);
+        _dbContext.CartItems.RemoveRange(sessions.SelectMany(s=>s.CartItems));
         
+        foreach (var shoppingSession in sessions)
+        {
+            shoppingSession.Total = 0;
+            shoppingSession.CartItems = new List<CartItem>();
+        }
+
         await _dbContext.SaveChangesAsync(ct);
         return true;
     }

@@ -1,20 +1,6 @@
 using SmartDealerships.Infrastructure.Responses;
 namespace SmartDealerships.WebApi.Features.ShoppingCart.GetCartStatus;
 
-public class GetCartStatusRequest 
-{
-    public GetCartStatusRequest(string userToken)
-    {
-        UserToken = userToken;
-    }
-
-    public GetCartStatusRequest()
-    {
-    }
-
-    public string UserToken { get; set; }
-}
-
 public class GetCartStatusResponse
 {
     public GetCartStatusResponse(string message)

@@ -26,8 +26,4 @@
     <ProjectReference Include="..\SmartDealerships.Infrastructure\SmartDealerships.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\ShoppingCart\ProceedToCheckout" />
-  </ItemGroup>
-
 </Project>

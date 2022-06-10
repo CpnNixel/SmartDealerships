@@ -22,7 +22,6 @@ public class GetAllUsersEndpoint : EndpointWithoutRequest<UsersResponse>
     {
         var users = mediator.Send(new GetAllUsersQuery(), ct);
         
-        // var token = Request.Headers[HeaderNames.Authorization];
         var token = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
 
         if (!users.Result.Any())
