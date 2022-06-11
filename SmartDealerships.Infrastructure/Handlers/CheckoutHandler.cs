@@ -10,6 +10,7 @@ namespace SmartDealerships.Infrastructure.Handlers;
 public class CheckoutHandler : IRequestHandler<CheckoutCommand, string>
 {
     private readonly IDealershipDbContext _dbContext;
+    
     private readonly IMediator _mediator;
 
     public CheckoutHandler(IDealershipDbContext dbContext, IMediator mediator)
@@ -17,7 +18,6 @@ public class CheckoutHandler : IRequestHandler<CheckoutCommand, string>
         _dbContext = dbContext;
         _mediator = mediator;
     }
-
 
     public async Task<string> Handle(CheckoutCommand request, CancellationToken ct)
     {
