@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using SmartDealerships.DataAccess.Extensions;
 using SmartDealerships.DataAccess.Interfaces;
 using SmartDealerships.DataAccess.Models;
-using SmartDealerships.Infrastructure.Commands;
+using BC = BCrypt.Net.BCrypt;
 using SmartDealerships.Infrastructure.Queries;
 using SmartDealerships.Infrastructure.Responses;
 
@@ -16,12 +16,10 @@ namespace SmartDealerships.Infrastructure.Handlers;
 public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDto>
 {
     private readonly IDealershipDbContext _dbContext;
-    private readonly IMediator Mediator;
 
-    public LoginHandler(IDealershipDbContext dbContext, IMediator mediator)
+    public LoginHandler(IDealershipDbContext dbContext)
     {
         _dbContext = dbContext;
-        Mediator = mediator;
     }
 
     public async Task<LoginResponseDto> Handle(LoginUserQuery request, CancellationToken ct)
@@ -30,12 +28,11 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDto>
         {
             return new LoginResponseDto();
         }
-
+        
         var user = await _dbContext.Users.FirstOrDefaultAsync(
-            u => u.Email == request.Email 
-                 && u.PasswordHash == Base64Encode(request.Password), ct);
+            u => u.Email == request.Email, ct);
 
-        if (user is null)
+        if (user is null || !BC.Verify(request.Password, user.PasswordHash))
         {
             return new LoginResponseDto();
         }
@@ -93,15 +90,5 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDto>
         );
     
         return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-    }
-
-    internal static string Base64Decode(string base64EncodedData) {
-        var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
-        return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
-    }
-
-    internal static string Base64Encode(string plainText) {
-        var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
-        return System.Convert.ToBase64String(plainTextBytes);
     }
 }

@@ -9,11 +9,14 @@ using SmartDealerships.DataAccess.PSQL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SmartDealerships.Infrastructure;
+using SmartDealerships.Infrastructure.Interfaces;
+using SmartDealerships.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddFastEndpoints();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddTransient<IHashService, HashService>();
 
 builder.Services.AddSwaggerDoc();
 builder.Services.AddAuthentication(opt =>

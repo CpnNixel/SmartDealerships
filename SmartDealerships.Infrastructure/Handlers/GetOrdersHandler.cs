@@ -9,7 +9,6 @@ public class GetOrdersHandler : IRequestHandler<GetCompanyOrdersQuery, OrderList
 {
     private readonly IDealershipDbContext _dbContext;
 
-
     public GetOrdersHandler(IDealershipDbContext dbContext)
     {
         _dbContext = dbContext;
