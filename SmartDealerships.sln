@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartDealerships.Infrastruc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartDealerships.DataAccess", "SmartDealerships.DataAccess\SmartDealerships.DataAccess.csproj", "{CEC30387-83F4-46B9-8ABF-31AB0ABE0EB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartDealerships.Web", "SmartDealerships.Web\SmartDealerships.Web.csproj", "{CFF69FF5-B4D0-4DD2-8CAA-8011C234AC90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{CEC30387-83F4-46B9-8ABF-31AB0ABE0EB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEC30387-83F4-46B9-8ABF-31AB0ABE0EB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEC30387-83F4-46B9-8ABF-31AB0ABE0EB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFF69FF5-B4D0-4DD2-8CAA-8011C234AC90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFF69FF5-B4D0-4DD2-8CAA-8011C234AC90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFF69FF5-B4D0-4DD2-8CAA-8011C234AC90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFF69FF5-B4D0-4DD2-8CAA-8011C234AC90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

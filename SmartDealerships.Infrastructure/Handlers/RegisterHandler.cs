@@ -4,6 +4,7 @@ using SmartDealerships.DataAccess.Interfaces;
 using SmartDealerships.DataAccess.Models;
 using SmartDealerships.Infrastructure.Commands;
 using SmartDealerships.Infrastructure.Responses;
+using BC = BCrypt.Net.BCrypt;
 
 namespace SmartDealerships.Infrastructure.Handlers;
 
@@ -24,7 +25,7 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, LoginResponseDto
             FirstName = req.FirstName,
             LastName = req.LastName,
             RoleId = 1,
-            PasswordHash = LoginHandler.Base64Encode(req.Password),
+            PasswordHash = BC.HashPassword(req.Password),
             Address = req.Address,
             Telephone = req.Telephone,
             CreatedAt = DateTime.Now.SetKindUtc(),

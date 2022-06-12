@@ -9,11 +9,26 @@ using SmartDealerships.DataAccess.PSQL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SmartDealerships.Infrastructure;
+using SmartDealerships.Infrastructure.Interfaces;
+using SmartDealerships.Infrastructure.Services;
 
+
+const string allowAnyOriginPolicyName = "AllowAnyOrigin";
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddFastEndpoints();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        allowAnyOriginPolicyName,
+        corsPolicyBuilder =>
+        {
+            corsPolicyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+        });
+});
+
+builder.Services.AddTransient<IHashService, HashService>();
 
 builder.Services.AddSwaggerDoc();
 builder.Services.AddAuthentication(opt =>
@@ -73,11 +88,11 @@ builder.Services.AddDbContext<DealershipDbContext>(
 
 
 builder.Services.AddMediatR(typeof(MediatrEntryPoint).Assembly);
-
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseCors(allowAnyOriginPolicyName);
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseFastEndpoints();

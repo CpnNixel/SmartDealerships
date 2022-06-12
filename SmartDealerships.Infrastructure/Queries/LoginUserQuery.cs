@@ -13,5 +13,5 @@ public class LoginUserQuery : IRequest<LoginResponseDto>
     
     public string? Email { get; init; }
     
-    public string? Password { get; init; }
+    public string Password { get; init; }
 }

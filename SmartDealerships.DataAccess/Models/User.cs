@@ -29,7 +29,7 @@ public class User
     public ShoppingSession? ShoppingSession { get; set; }    
     
     [Required]
-    public string? PasswordHash { get; set; }
+    public string PasswordHash { get; set; }
     
     public string? Address { get; set; }
     
