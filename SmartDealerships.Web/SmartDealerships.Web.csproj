@@ -4,6 +4,10 @@
     <TargetFramework>net6.0</TargetFramework>
     <OutputType>Library</OutputType>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Remove="node_modules\**" />
+  </ItemGroup>
 
   <Target Name="BuildReact" BeforeTargets="Build">
 <!--    <Exec Command="npm install" />-->
