@@ -38,7 +38,7 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDto>
         }
 
         #region Change to trigger BEFORE INSERT CONSTRAINT UniqueSessionPerUser
-        
+
         var sessions = _dbContext.ShoppingSessions
             .Where(u => u.UserId == user.Id)
             .Include(s => s.CartItems);
