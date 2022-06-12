@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -24,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SmartDealerships.DataAccess\SmartDealerships.DataAccess.csproj" />
     <ProjectReference Include="..\SmartDealerships.Infrastructure\SmartDealerships.Infrastructure.csproj" />
+    <ProjectReference Include="..\SmartDealerships.Web\SmartDealerships.Web.csproj" />
   </ItemGroup>
 
 </Project>
