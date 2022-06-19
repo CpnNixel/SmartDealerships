@@ -1,19 +1,12 @@
 import React from 'react';
-import {useState, useEffect} from 'react';
-import { getDefaultService } from '../services/default.service';
-
-// export default function Hello(){
-//     return (
-//         <div>Hello</div>
-//     );
-// }
-
+import { useState, useEffect } from 'react';
+import { getDefaultService } from '../../services/default.service';
 
 export default function Hello() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [item, setItem] = useState([]);
-  useEffect( () => {
+  useEffect(() => {
     getDefaultService.getDefault()
       .then(
         (result) => {
@@ -31,5 +24,5 @@ export default function Hello() {
   } else if (!isLoaded) {
     return <div>Loading...</div>;
   }
-   return <div>{item}</div>
+  return <div>{item}</div>
 }
