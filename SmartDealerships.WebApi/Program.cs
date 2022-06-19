@@ -1,17 +1,14 @@
-using System.Text;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SmartDealerships.DataAccess.Interfaces;
 using SmartDealerships.DataAccess.PSQL;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using SmartDealerships.Infrastructure;
-using SmartDealerships.Infrastructure.Interfaces;
-using SmartDealerships.Infrastructure.Services;
-
+using System.Text;
 
 const string allowAnyOriginPolicyName = "AllowAnyOrigin";
 var builder = WebApplication.CreateBuilder(args);
@@ -28,7 +25,6 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddTransient<IHashService, HashService>();
 
 builder.Services.AddSwaggerDoc();
 builder.Services.AddAuthentication(opt =>

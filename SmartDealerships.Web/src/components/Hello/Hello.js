@@ -2,13 +2,6 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { getDefaultService } from '../../services/default.service';
 
-// export default function Hello(){
-//     return (
-//         <div>Hello</div>
-//     );
-// }
-
-
 export default function Hello() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
