@@ -26,7 +26,6 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, LoginResponseDto
             LastName = req.LastName,
             RoleId = 1,
             PasswordHash = BC.HashPassword(req.Password),
-            Address = req.Address,
             Telephone = req.Telephone,
             CreatedAt = DateTime.Now.SetKindUtc(),
             ModifiedAt = DateTime.Now.SetKindUtc(),
@@ -34,18 +33,18 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, LoginResponseDto
         _dbContext.Users.Add(user);
 
         await _dbContext.SaveChangesAsync(ct);
-        
+
         var token = LoginHandler.GenerateToken();
 
         await CreateSession(user, token);
 
-        return new LoginResponseDto {IsSuccessful = true, Token = LoginHandler.GenerateToken()};
+        return new LoginResponseDto { IsSuccessful = true, Token = LoginHandler.GenerateToken() };
     }
-    
+
     private async Task CreateSession(User user, string token)
     {
         _dbContext.ShoppingSessions.Add(
-        
+
             new ShoppingSession
             {
                 UserId = user.Id,
@@ -54,7 +53,6 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, LoginResponseDto
                 Total = 0,
                 CreatedAt = DateTime.Now.SetKindUtc(),
                 ModifiedAt = DateTime.Now.SetKindUtc(),
-
             }
         );
 

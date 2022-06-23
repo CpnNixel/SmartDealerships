@@ -7,7 +7,7 @@ namespace SmartDealerships.DataAccess.PSQL;
 
 public sealed class DealershipDbContext : DbContext, IDealershipDbContext
 {
-    public DealershipDbContext(DbContextOptions<DealershipDbContext> options): base(options)
+    public DealershipDbContext(DbContextOptions<DealershipDbContext> options) : base(options)
     {
         Database.EnsureCreated();
     }
@@ -15,7 +15,6 @@ public sealed class DealershipDbContext : DbContext, IDealershipDbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        // modelBuilder.UseSerialColumns();
         modelBuilder.UseIdentityByDefaultColumns();
         modelBuilder.Entity<OrderDetails>()
             .HasMany<Product>(s => s.Products)
@@ -156,7 +155,7 @@ public sealed class DealershipDbContext : DbContext, IDealershipDbContext
                     Price = 89.99m,
                     CategoryId = 5,
                     CompanyId = 1
-                },          
+                },
                 new Product
                 {
                     Id = 6,
@@ -166,8 +165,9 @@ public sealed class DealershipDbContext : DbContext, IDealershipDbContext
                     Price = 79.99m,
                     CategoryId = 5,
                     CompanyId = 1
-                },             
-                new Product{
+                },
+                new Product
+                {
                     Id = 7,
                     Name = "Duralast Brake Rotor 5333",
                     Description = "Duralast® brand disc brake rotors are designed and engineered to match J431 and your vehicles original equipment performance. Our Duralast® rotors can replace your OE parts with no change in performance and safety. So when you need a part you can trust at a price you can afford.",
@@ -179,21 +179,21 @@ public sealed class DealershipDbContext : DbContext, IDealershipDbContext
             );
         #endregion
     }
-    
+
     public DbSet<User> Users { get; set; }
-    
-    public DbSet<Product> Products { get; set; }               
-    
+
+    public DbSet<Product> Products { get; set; }
+
     public DbSet<OrderDetails> OrderDetails { get; set; }
-    
+
     public DbSet<Category> Categories { get; set; }
 
     public DbSet<ShoppingSession> ShoppingSessions { get; set; }
-    
+
     public DbSet<CartItem> CartItems { get; set; }
-    
+
     public DbSet<Company> Companies { get; set; }
-    
+
     public DbSet<Role> Roles { get; set; }
 
     public override Task<int> SaveChangesAsync(CancellationToken ct = default) => base.SaveChangesAsync(ct);

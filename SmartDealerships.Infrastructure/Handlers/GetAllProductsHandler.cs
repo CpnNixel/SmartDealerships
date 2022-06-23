@@ -1,4 +1,4 @@
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SmartDealerships.DataAccess.Interfaces;
 using SmartDealerships.Infrastructure.Queries;
@@ -14,7 +14,7 @@ public class GetAllProductsHandler : IRequestHandler<GetAllProductsQuery, List<P
     {
         _dbContext = dbContext;
     }
-    
+
     public Task<List<ProductDto>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
     {
         var products = _dbContext.Products

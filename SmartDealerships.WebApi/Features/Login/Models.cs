@@ -1,34 +1,41 @@
 using FastEndpoints;
 using FluentValidation;
+using SmartDealerships.Infrastructure.Responses;
 
 namespace SmartDealerships.WebApi.Features.Login;
 
 public class LoginRequest
 {
-    public string Email { get; set; }
-        
-    public string Password { get; set; }
+    public string email { get; set; }
+
+    public string password { get; set; }
 }
 
 public class LoginResponse
 {
-    public string? Token { get; set; }
+    public bool isSuccessful { get; set; }
+
+    public string message { get; set; }
+
+    public UserDto user { get; set; }
+
+    public string? token { get; set; }
 }
 
 public class LoginValidator : Validator<LoginRequest>
 {
     public LoginValidator()
     {
-        RuleFor(x => x.Email)
+        RuleFor(x => x.email)
             .NotEmpty().WithMessage("email address is required!")
             .EmailAddress()
             .Length(6, 40)
             .WithMessage("the format of your email address is wrong!");
 
-        RuleFor(x => x.Password)
+        RuleFor(x => x.password)
             .NotEmpty().WithMessage("{PropertyName} is required.")
             .Length(6, 40);
-        
+
         // WithMessage("{PropertyName} must be pass date.");
 
         // RuleFor(x => x.FirstName)

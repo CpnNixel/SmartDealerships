@@ -16,7 +16,7 @@ public class RegistrationRequest
     
     public string? Address { get; set; }
     
-    public string? Telephone { get; set; }
+    public string? PhoneNumber { get; set; }
 }
 
 public class RegistrationResponse : LoginResponse
@@ -48,11 +48,11 @@ public class RegisterValidator : Validator<RegistrationRequest>
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage("{PropertyName} is required.")
             .Length(6, 40)
-            .NotEqual(x=>x.Telephone)
+            .NotEqual(x=>x.PhoneNumber)
             .WithMessage("{PropertyName} should not be equal to other fields");
             
         
-        RuleFor(x => x.Telephone)
+        RuleFor(x => x.PhoneNumber)
             .NotEmpty().WithMessage("{PropertyName} is required.")
             .Length(6, 15)
             .NotEqual(x=>x.Email)

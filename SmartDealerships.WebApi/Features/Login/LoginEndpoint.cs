@@ -4,29 +4,29 @@ using SmartDealerships.Infrastructure.Queries;
 
 namespace SmartDealerships.WebApi.Features.Login;
 
-public class LoginEndpoint  : Endpoint<LoginRequest, LoginResponse>
+public class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
 {
     public IMediator mediator { get; set; }
-    
+
     public override void Configure()
     {
         Verbs(Http.POST);
-        Routes("account/login");
+        Routes("api/account/login");
         AllowAnonymous();
     }
-    
-    public override async Task HandleAsync (LoginRequest? req, CancellationToken ct)
+
+    public override async Task HandleAsync(LoginRequest? req, CancellationToken ct)
     {
         if (req == null)
         {
             await SendNotFoundAsync(ct);
         }
 
-        var res = mediator.Send(new LoginUserQuery(req.Email, req.Password), ct).Result;
-        
+        var res = mediator.Send(new LoginUserQuery(req.email, req.password), ct).Result;
+
         if (res.IsSuccessful)
         {
-            await SendOkAsync(new LoginResponse {Token = res.Token}, ct);
+            await SendOkAsync(new LoginResponse { user = res.User, token = res.Token, isSuccessful = true }, ct);
         }
         else
         {

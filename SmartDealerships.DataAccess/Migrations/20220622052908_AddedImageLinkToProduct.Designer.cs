@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartDealerships.DataAccess.PSQL;
@@ -11,9 +12,10 @@ using SmartDealerships.DataAccess.PSQL;
 namespace SmartDealerships.DataAccess.Migrations
 {
     [DbContext(typeof(DealershipDbContext))]
-    partial class DealershipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220622052908_AddedImageLinkToProduct")]
+    partial class AddedImageLinkToProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,6 +200,7 @@ namespace SmartDealerships.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("ImageLink")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -417,11 +420,11 @@ namespace SmartDealerships.DataAccess.Migrations
                             Id = 1,
                             Address = "Kharkiv city, Buchmy 50",
                             CompanyId = 1,
-                            CreatedAt = new DateTime(2022, 6, 22, 8, 33, 26, 456, DateTimeKind.Utc).AddTicks(1503),
+                            CreatedAt = new DateTime(2022, 6, 22, 8, 29, 7, 908, DateTimeKind.Utc).AddTicks(7493),
                             Email = "john.doe@gmail.com",
                             FirstName = "John",
                             LastName = "Doe",
-                            ModifiedAt = new DateTime(2022, 6, 22, 8, 33, 26, 456, DateTimeKind.Utc).AddTicks(1533),
+                            ModifiedAt = new DateTime(2022, 6, 22, 8, 29, 7, 908, DateTimeKind.Utc).AddTicks(7526),
                             PasswordHash = "$2a$11$HJsqUEsh/lebuPE34xZ9N.Ve//.OXx.9UA3Rk5ZIlO.McASOIWzRO",
                             RoleId = 1,
                             Telephone = "380662016"
@@ -431,11 +434,11 @@ namespace SmartDealerships.DataAccess.Migrations
                             Id = 2,
                             Address = "Pervomaiskiy",
                             CompanyId = 1,
-                            CreatedAt = new DateTime(2022, 6, 22, 8, 33, 26, 456, DateTimeKind.Utc).AddTicks(1536),
+                            CreatedAt = new DateTime(2022, 6, 22, 8, 29, 7, 908, DateTimeKind.Utc).AddTicks(7531),
                             Email = "mykyta.kysil@nure.ua",
                             FirstName = "Mykyta",
                             LastName = "Kysil",
-                            ModifiedAt = new DateTime(2022, 6, 22, 8, 33, 26, 456, DateTimeKind.Utc).AddTicks(1538),
+                            ModifiedAt = new DateTime(2022, 6, 22, 8, 29, 7, 908, DateTimeKind.Utc).AddTicks(7533),
                             PasswordHash = "$2a$11$RY9/Od/PHd5IyNWy6lBiYe1nXSVATRNCBpG4NDfIsneT7lNHj75G2",
                             RoleId = 2,
                             Telephone = "0662016521"
