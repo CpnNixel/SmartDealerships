@@ -22,14 +22,14 @@ public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, List<UserDto
         {
             throw new Exception("no users were found");
         }
-        
+
         return Task.FromResult(users.Select(u => new UserDto
         {
             Id = u.Id,
             FirstName = u.FirstName,
             LastName = u.LastName,
             Address = u.Address,
-            Telephone = u.Telephone,
+            PhoneNumber = u.Telephone,
             CreatedAt = u.CreatedAt,
             ModifiedAt = u.ModifiedAt,
             RoleName = u.Role.RoleName

@@ -7,12 +7,12 @@ namespace SmartDealerships.WebApi.Features.CategoriesAndProducts;
 public class GetAllProductsEndpoint : EndpointWithoutRequest<CategoriesAndProductsResponse>
 {
     public IMediator Mediator { get; set; }
-    
+
     public override void Configure()
     {
         Verbs(Http.GET);
-        Routes("get-all-products");
-        Roles("admin");
+        Routes("api/products/all");
+        Roles("admin, user");
     }
 
     public override async Task HandleAsync(CancellationToken ct)
@@ -24,12 +24,12 @@ public class GetAllProductsEndpoint : EndpointWithoutRequest<CategoriesAndProduc
             var res = products.Result.Select(p =>
                 new ProductResponseDto(p.Id, p.Name, p.Description, p.Sku, p.Price, p.CategoryName, p.CompanyName));
 
-            await SendOkAsync(new CategoriesAndProductsResponse(res.ToList()), ct);
+            await SendOkAsync(new CategoriesAndProductsResponse(res.ToList(), "success", true), ct);
         }
         else
         {
             await SendNotFoundAsync(ct);
         }
-        
+
     }
 }

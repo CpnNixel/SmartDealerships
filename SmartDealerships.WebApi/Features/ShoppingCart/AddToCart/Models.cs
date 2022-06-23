@@ -2,22 +2,18 @@ namespace SmartDealerships.WebApi.Features.ShoppingCart.AddToCart;
 
 public class AddToCartRequest
 {
-    public AddToCartRequest(List<CartItem> productIdAndQty)
+    public AddToCartRequest(int productId, int productQty)
     {
-        ProductIdAndQty = productIdAndQty;
+        ProductId = productId;
+        ProductQty = productQty;
     }
-    
+
     public AddToCartRequest()
     {
     }
 
-    public List<CartItem> ProductIdAndQty { get; init; }
-}
-
-public struct CartItem
-{
-    public int ProductId { get; set; }
     public int ProductQty { get; set; }
+    public int ProductId { get; set; }
 }
 
 

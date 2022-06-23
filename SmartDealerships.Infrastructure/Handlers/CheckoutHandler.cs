@@ -10,7 +10,7 @@ namespace SmartDealerships.Infrastructure.Handlers;
 public class CheckoutHandler : IRequestHandler<CheckoutCommand, string>
 {
     private readonly IDealershipDbContext _dbContext;
-    
+
     private readonly IMediator _mediator;
 
     public CheckoutHandler(IDealershipDbContext dbContext, IMediator mediator)
@@ -22,26 +22,41 @@ public class CheckoutHandler : IRequestHandler<CheckoutCommand, string>
     public async Task<string> Handle(CheckoutCommand request, CancellationToken ct)
     {
         var session = await _dbContext.ShoppingSessions
-            .Include(s=>s.CartItems)
-            .ThenInclude(i=>i.Product)
+            .Include(s => s.CartItems)
+            .ThenInclude(i => i.Product)
+            .ThenInclude(i => i.Company)
             .FirstOrDefaultAsync(s => s.Token == request.UserToken, ct);
 
-        if (session == null) 
-            throw new Exception("session is null");
+        //if (session == null) 
+        //    throw new Exception("session is null");
 
-        _dbContext.OrderDetails.Add(new OrderDetails
+        var uniqueCompanies = session.CartItems.Select(x => x.Product.CompanyId).Distinct();
+        foreach (var cp in uniqueCompanies)
         {
-            UserId = session.UserId,
-            Products = session.CartItems.Select(x => x.Product).ToList(),
-            Total = session.Total,
-            CreatedAt = DateTime.Now.SetKindUtc(),
-            ModifiedAt = DateTime.Now.SetKindUtc()
-        });
+            _dbContext.OrderDetails.Add(new OrderDetails
+            {
+                UserId = session.UserId,
+                Products = session.CartItems.Select(x => x.Product).ToList(),
+                Total = session.Total,
+                CompanyId = cp,
+                CreatedAt = DateTime.Now.SetKindUtc(),
+                ModifiedAt = DateTime.Now.SetKindUtc()
+            });
+        }
+        //_dbContext.OrderDetails.Add(new OrderDetails
+        //{
+        //    UserId = session.UserId,
+        //    Products = session.CartItems.Select(x => x.Product).ToList(),
+        //    Total = session.Total,
+        //    SellingCompany = 
+        //    CreatedAt = DateTime.Now.SetKindUtc(),
+        //    ModifiedAt = DateTime.Now.SetKindUtc()
+        //});
 
         await _dbContext.SaveChangesAsync(ct);
-        
+
         await _mediator.Send(new EmptyCartCommand(request.UserToken), ct);
-        
+
         return "success";
     }
 }

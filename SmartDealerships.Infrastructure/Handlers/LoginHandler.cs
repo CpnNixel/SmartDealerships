@@ -29,8 +29,9 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDto>
             return new LoginResponseDto();
         }
 
-        var user = await _dbContext.Users.FirstOrDefaultAsync(
-            u => u.Email == request.Email, ct);
+        var user = await _dbContext.Users
+            .Include(u => u.Role)
+            .FirstOrDefaultAsync(u => u.Email == request.Email, ct);
 
         if (user is null || !BC.Verify(request.Password, user.PasswordHash))
         {
@@ -55,7 +56,7 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDto>
 
         await CreateSession(user, token);
 
-        return new LoginResponseDto { IsSuccessful = true, Token = token };
+        return new LoginResponseDto { IsSuccessful = true, Token = token, User = Map(user) };
 
     }
 
@@ -74,6 +75,21 @@ public class LoginHandler : IRequestHandler<LoginUserQuery, LoginResponseDto>
         );
 
         await _dbContext.SaveChangesAsync();
+    }
+
+    private UserDto Map(User u)
+    {
+        return new UserDto
+        {
+            Id = u.Id,
+            FirstName = u.FirstName,
+            LastName = u.LastName,
+            Address = u.Address,
+            PhoneNumber = u.Telephone,
+            CreatedAt = u.CreatedAt,
+            ModifiedAt = u.ModifiedAt,
+            RoleName = u.Role.RoleName
+        };
     }
 
     public static string GenerateToken()
