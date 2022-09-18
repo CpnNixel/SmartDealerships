@@ -1,18 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-// import { Router } from 'react-router-dom';
-
+import React, { Suspense } from 'react';
+import ReactDOM from 'react-dom';
+import { Router } from 'react-router-dom';
 import App from './App';
-// import { history } from './api-client/history';
+import { history } from './api-client';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-
-root.render(
+ReactDOM.render(
   <React.StrictMode>
-     {/* <Router history={history}> */}
-      <App />
-    {/* </Router> */}
-  </React.StrictMode>
+    <Suspense fallback={<div>Loading ...</div>}>
+      <Router history={history}>
+        <App />
+      </Router>
+    </Suspense>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
+

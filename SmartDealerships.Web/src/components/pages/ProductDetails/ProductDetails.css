@@ -1,0 +1,26 @@
+.topInfo {
+	cursor: pointer;
+	top: 8px;
+	right: 16px;
+	font-size: 18px;
+	float: right;
+}
+
+.fieldTextBig {
+	margin-top: 60px;
+	margin-bottom: 30px;
+}
+
+.accordionsBlock {
+	display: block;
+}
+
+.accordionsBlock div.accordion {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+.accordionsBlock button.btn-link {
+	color: #881d32;
+	font-weight: 500;
+}

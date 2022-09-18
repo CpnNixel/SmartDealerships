@@ -1,21 +1,27 @@
 {
-  "$schema": "https://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:53977",
-      "sslPort": 44363
-    }
-  },
-  "profiles": {
-    "SmartDealerships.Web": {
-      "commandName": "Project",
-      
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-      },
-      "applicationUrl": "https://localhost:7069;http://localhost:5088"
-    }
-  }
+	"iisSettings": {
+		"windowsAuthentication": false,
+		"anonymousAuthentication": true,
+		"iisExpress": {
+			"applicationUrl": "http://localhost:59247/",
+			"sslPort": 44363
+		}
+	},
+	"profiles": {
+		"IIS Express": {
+			"commandName": "IISExpress",
+			"launchBrowser": true,
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Development"
+			}
+		},
+		"SmartDealerships.Web": {
+			"commandName": "Project",
+			"launchBrowser": true,
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Development"
+			},
+			"applicationUrl": "https://localhost:5001;http://localhost:5000"
+		}
+	}
 }
