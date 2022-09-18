@@ -1,5 +1,5 @@
 # SmartDealerships
-App with API built on .NET 6 using
+PoC application powered with .NET 6 using
  - PostgreSQL
  - EF Core
  - [FastEndpoints](https://github.com/dj-nitehawk/FastEndpoints)
