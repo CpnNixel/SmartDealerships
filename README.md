@@ -5,7 +5,7 @@ PoC application powered with .NET 6 using
  - [FastEndpoints](https://github.com/dj-nitehawk/FastEndpoints)
  - [MediatR](https://github.com/jbogard/MediatR)
 
-and with Frontend built on React using:
+and React using
  - create-react-app
  - n18next
  - axios
