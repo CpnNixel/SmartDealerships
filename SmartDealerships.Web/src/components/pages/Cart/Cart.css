@@ -1,0 +1,13 @@
+.containter {
+	display: flex;
+}
+
+.longdiv {
+	margin: 5rem;
+	border: solid;
+	border-width: thin;
+}
+
+.total {
+	margin-left: 65%;
+}

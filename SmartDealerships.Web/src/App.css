@@ -1,0 +1,13 @@
+.app {
+	padding: 0;
+	background-color: #ffff;
+	background-image: linear-gradient(to left top, #ffff, #ffff);
+}
+
+.app .row {
+	margin: 0;
+}
+
+.app .col {
+	padding: 0;
+}

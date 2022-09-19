@@ -1,0 +1,48 @@
+#main {
+    background-color: #f2f2f2;
+    padding: 20px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    border-bottom: 4px solid #ddd;
+}
+
+#author img {
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -o-border-radius: 100%;
+    border-radius: 100%;
+    border: 5px solid #ecf0f1;
+    margin-bottom: 10px;
+}
+
+.profile-photo {
+    margin: 0 0 15px 65px;
+    max-height: 200px;
+    max-width: 200px;
+}
+
+.profile-photo img {
+    max-width: 100%;
+}
+
+#main .nav-pills .nav-link.active {
+    background-color: #ab3024;
+    color: white;
+}
+
+#main a.nav-item.nav-link {
+    color: #881d32;
+}
+
+.progress .progress-bar {
+    background-color: #ab3024;
+}
+
+div.tab-pane > .form-control:focus {
+    border-color: #ab3024;
+    box-shadow: 0 0 0 0.2rem rgba(171,48,36,.25);
+}

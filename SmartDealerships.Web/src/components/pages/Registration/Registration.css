@@ -1,0 +1,12 @@
+.sign-container {
+    min-height: 78vh;
+}
+
+.sign-form {
+    margin: 50px auto;
+    width: 950px;
+}
+
+.form-buttons {
+    margin-top: 50px;
+}

@@ -59,21 +59,7 @@ public sealed class DealershipDbContext : DbContext, IDealershipDbContext
                     CreatedAt = DateTime.Now.SetKindUtc(),
                     ModifiedAt = DateTime.Now.SetKindUtc(),
                     CompanyId = 1
-                },
-                new User
-                {
-                    Id = 2,
-                    RoleId = 2,
-                    FirstName = "Mykyta",
-                    LastName = "Kysil",
-                    Email = "mykyta.kysil@nure.ua",
-                    PasswordHash = "$2a$11$RY9/Od/PHd5IyNWy6lBiYe1nXSVATRNCBpG4NDfIsneT7lNHj75G2",
-                    Address = "Pervomaiskiy",
-                    Telephone = "0662016521",
-                    CreatedAt = DateTime.Now.SetKindUtc(),
-                    ModifiedAt = DateTime.Now.SetKindUtc(),
-                    CompanyId = 1
-                });
+                };
 
         modelBuilder.Entity<Category>()
             .HasData(

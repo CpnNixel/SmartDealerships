@@ -1,0 +1,31 @@
+.cardWrap .card {
+  width: 20rem;
+  flex-basis: 33.333333%;
+  padding: 1rem;
+  margin: 1rem;
+  background-color: transparent;
+  border: 0;
+}
+@media (max-width: 600px) {
+  .card {
+    flex-basis: 50%;
+  }
+}
+.card-body h2 {
+  text-align: center;
+  color: #1a1a1a;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+}
+.card-img-top {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  max-width: 90px;
+}
+.card-text {
+  font-family: "Inter", sans-serif;
+  font-size: 1.3em;
+  color: #3d3e40;
+  text-align: center;
+}

@@ -1,0 +1,11 @@
+.footer {
+  background-color: transparent;
+}
+.footer span{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+}
+#logoCut {
+  max-width: 50px;
+  margin-right: 20px;
+}
